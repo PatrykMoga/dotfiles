@@ -2,6 +2,7 @@
 
 # Aliases
 alias vim='nvim'
+alias lg='lazygit'
 
 alias dotfiles="cd ~/dotfiles/"
 alias cgapi='cd ~/Developer/coding-giants/repos/formularzzapisowygiganci'
