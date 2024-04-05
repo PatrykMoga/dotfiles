@@ -3,6 +3,8 @@
 # Aliases
 alias vim='nvim'
 alias lg='lazygit'
+alias c="clear"
+alias ls='ls --color=auto'
 
 alias dotfiles="cd ~/dotfiles/"
 alias cgapi='cd ~/Developer/coding-giants/repos/formularzzapisowygiganci'
