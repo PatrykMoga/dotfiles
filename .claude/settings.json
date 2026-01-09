@@ -1,9 +1,13 @@
 {
-  "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": true
-  },
   "statusLine": {
     "type": "command",
     "command": "input=$(cat); dir=$(echo \"$input\" | jq -r '.workspace.current_dir'); cd \"$dir\" 2>/dev/null || true; dir_name=$(basename \"$dir\"); printf '[%s]' \"$dir_name\"; if git rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -c gc.autodetach=false branch --show-current 2>/dev/null || git -c gc.autodetach=false rev-parse --short HEAD 2>/dev/null); printf ' ['; if [ -n \"$branch\" ]; then printf '⎇ %s' \"$branch\"; fi; status=$(git -c gc.autodetach=false status --porcelain 2>/dev/null); if [ -n \"$status\" ]; then modified=$(echo \"$status\" | grep -c '^.M' 2>/dev/null || echo 0); added=$(echo \"$status\" | grep -c '^A' 2>/dev/null || echo 0); deleted=$(echo \"$status\" | grep -c '^.D' 2>/dev/null || echo 0); untracked=$(echo \"$status\" | grep -c '^??' 2>/dev/null || echo 0); [ \"$modified\" -gt 0 ] && printf '!%d' \"$modified\"; [ \"$added\" -gt 0 ] && printf '+%d' \"$added\"; [ \"$deleted\" -gt 0 ] && printf '✘%d' \"$deleted\"; [ \"$untracked\" -gt 0 ] && printf '?%d' \"$untracked\"; fi; printf ']'; fi"
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "csharp-lsp@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true
   }
 }
