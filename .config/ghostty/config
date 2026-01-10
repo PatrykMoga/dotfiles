@@ -1,0 +1,16 @@
+theme = Xcode Dark
+font-family = SF Mono
+
+background-opacity = 1.0
+background-blur-radius = 20
+keybind = shift+enter=text:\x1b\r
+
+# Enable desktop notifications when commands finish in the background
+desktop-notifications = true
+
+# Enable shell integration (needed for notifications)
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# Visual bell for tab indicators
+window-decoration = true
