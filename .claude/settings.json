@@ -9,5 +9,17 @@
     "commit-commands@claude-plugins-official": true,
     "csharp-lsp@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true
+  },
+ "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/patrykmoga/.claude/notify-on-stop.sh"
+          }
+        ]
+      }
+    ]
   }
 }
