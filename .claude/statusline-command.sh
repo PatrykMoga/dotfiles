@@ -20,26 +20,36 @@ get_context_current_usage() { echo "$input" | jq -r '.context_window.current_usa
 MODEL=$(get_model_name)
 CURRENT_DIR=$(get_current_dir)
 CONTEXT_SIZE=$(echo "$input" | jq -r '.context_window.context_window_size')
-USAGE=$(echo "$input" | jq '.context_window.current_usage')
+CONTEXT_USAGE=$(echo "$input" | jq '.context_window.current_usage')
+COST=$(get_cost)
+DURATION=$(get_duration)
+LINES_ADDED=$(get_lines_added)
+LINES_REMOVED=$(get_lines_removed)
+
+STATUS_LINE="􂮢  $MODEL | 􀈕  ${CURRENT_DIR##*/}"
 
 # Show git branch if in a git repo
-GIT_BRANCH=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
     BRANCH=$(git branch --show-current 2>/dev/null)
     if [ -n "$BRANCH" ]; then
-        GIT_BRANCH=" | 􀙠  $BRANCH"
+        STATUS_LINE+=" | 􀙠  $BRANCH"
     fi
 fi
 
-# Show current usage
-CURRENT_USAGE=""
-if [ "$USAGE" != "null" ]; then
+# Show lines added and removed
+if [ "$LINES_ADDED" != "null" ] || [ "$LINES_REMOVED" != "null"]; then
+    STATUS_LINE+=" | 􀄬  $LINES_ADDED/$LINES_REMOVED"
+fi
+
+# Show current context usage
+if [ "$CONTEXT_USAGE" != "null" ]; then
     # Calculate current context from current_usage fields
-    CURRENT_TOKENS=$(echo "$USAGE" | jq '.input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
-    CURRENT_USAGE=$((CURRENT_TOKENS * 100 / CONTEXT_SIZE))
+    CURRENT_TOKENS=$(echo "$CONTEXT_USAGE" | jq '.input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
+    CURRENT_CONTEXT_USAGE=$((CURRENT_TOKENS * 100 / CONTEXT_SIZE))
+    STATUS_LINE+=" | 􀫦  $CURRENT_CONTEXT_USAGE% "
 else
-    CURRENT_USAGE="0"
+    STATUS_LINE+=" | 􀫦  0% "
 fi
 
 # Format status line
-echo "􂮢  $MODEL | 􀈕  ${CURRENT_DIR##*/}$GIT_BRANCH | 􁫏  $CURRENT_USAGE%"
+echo "$STATUS_LINE"
