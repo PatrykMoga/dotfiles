@@ -1,4 +1,5 @@
-theme = Xcode Dark
+# theme = Xcode Dark
+theme = Catppuccin Macchiato 
 font-family = SF Mono
 
 background-opacity = 1.0
