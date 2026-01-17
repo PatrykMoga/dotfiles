@@ -46,9 +46,17 @@ if [ "$CONTEXT_USAGE" != "null" ]; then
     # Calculate current context from current_usage fields
     CURRENT_TOKENS=$(echo "$CONTEXT_USAGE" | jq '.input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
     CURRENT_CONTEXT_USAGE=$((CURRENT_TOKENS * 100 / CONTEXT_SIZE))
-    STATUS_LINE+=" | 􀫦  $CURRENT_CONTEXT_USAGE% "
+    STATUS_LINE+=" | 􀫦  $CURRENT_CONTEXT_USAGE%"
 else
-    STATUS_LINE+=" | 􀫦  0% "
+    STATUS_LINE+=" | 􀫦  0%"
+fi
+
+if [ "$COST" != "null" ]; then
+    STATUS_LINE+=" | 􁎣  $COST"
+fi
+
+if [ "$DURATION" != "null" ]; then
+    STATUS_LINE+=" | 􀣔  $DURATION"
 fi
 
 # Format status line
