@@ -2,15 +2,20 @@
 
 # Aliases
 alias vim='nvim'
+alias v='nvim'
 alias lg='lazygit'
-alias c="clear"
+alias c='claude'
+alias cr='claude -r'
 alias ls='ls --color=auto'
+alias b='brew'
+alias bout='brew outdated'
+alias bug='brew upgrade'
 
 # Git
 alias gpf='git push --force-with-lease'
 alias grl='git reset HEAD~1'
 
-alias dotfiles="cd ~/Developer/dotfiles/"
+alias dot="cd ~/Developer/dotfiles/"
 alias rust='cd ~/Developer/playground/rust/'
 alias sb='~/Developer/cli/shit_break/target/release/shit_break'
 
