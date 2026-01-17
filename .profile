@@ -16,8 +16,6 @@ alias gpf='git push --force-with-lease'
 alias grl='git reset HEAD~1'
 
 alias dot="cd ~/Developer/dotfiles/"
-alias rust='cd ~/Developer/playground/rust/'
-alias sb='~/Developer/cli/shit_break/target/release/shit_break'
 
 . "$HOME/.local/bin/env"
 
