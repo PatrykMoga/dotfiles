@@ -47,7 +47,7 @@ Prefix is `` ` `` (backtick). Double-tap for literal backtick.
 | `` ` + p `` | Toggle floating pane (floax) |
 | `` ` + o `` | Session picker (sessionx) |
 | `` ` + g `` | Lazygit popup |
-| `` ` + R `` | Reload tmux config |
+| `` ` + r `` | Reload tmux config |
 
 ## Shell Features
 
