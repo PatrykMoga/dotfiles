@@ -39,16 +39,11 @@ source <(fzf --zsh)
 
 # Auto-start tmux
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-    session_count=$(tmux list-sessions 2>/dev/null | wc -l)
-    if [ "$session_count" -gt 1 ]; then
-        # Multiple sessions exist - show sessionx picker
-        tmux new-session -d -s temp_session 2>/dev/null || true
-        tmux attach-session -t temp_session \; run-shell "~/.config/tmux/plugins/tmux-sessionx/scripts/sessionx.sh"
-    elif [ "$session_count" -eq 1 ]; then
-        # One session exists - create new session
-        tmux new-session
+    if [ "$(tmux list-sessions 2>/dev/null | wc -l)" -gt 1 ]; then
+        # Multiple sessions - attach and show sessionx picker
+        tmux attach \; run-shell "sleep 0.1 && ~/.config/tmux/plugins/tmux-sessionx/scripts/sessionx.sh"
     else
-        # No sessions - create first session
-        tmux new-session
+        # Attach to existing or create new
+        tmux attach || tmux new-session
     fi
 fi
