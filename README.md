@@ -22,6 +22,7 @@ Personal macOS configuration files managed with GNU Stow.
 - [Yazi](https://yazi-rs.github.io) (`brew install yazi`)
 - [zoxide](https://github.com/ajeetdsouza/zoxide) (`brew install zoxide`)
 - [fzf](https://github.com/junegunn/fzf) (`brew install fzf`)
+- [bat](https://github.com/sharkdp/bat) (`brew install bat`)
 - [lazygit](https://github.com/jesseduffield/lazygit) (`brew install lazygit`)
 
 ## Installation
@@ -39,14 +40,14 @@ stow -n --verbose .
 
 ## tmux Keybindings
 
-Prefix is `C-s` (Ctrl+s).
+Prefix is `` ` `` (backtick). Double-tap for literal backtick.
 
 | Key | Action |
 |-----|--------|
-| `prefix + p` | Toggle floating pane (floax) |
-| `prefix + o` | Session picker (sessionx) |
-| `prefix + g` | Lazygit popup |
-| `prefix + R` | Reload tmux config |
+| `` ` + p `` | Toggle floating pane (floax) |
+| `` ` + o `` | Session picker (sessionx) |
+| `` ` + g `` | Lazygit popup |
+| `` ` + R `` | Reload tmux config |
 
 ## Shell Features
 
