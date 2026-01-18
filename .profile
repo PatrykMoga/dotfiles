@@ -13,6 +13,7 @@ alias bug='brew upgrade'
 alias l='ls -la'
 alias t='tmux'
 
+alias dev="cd ~/Developer/"
 alias dot="cd ~/Developer/dotfiles/"
 
 # Git
