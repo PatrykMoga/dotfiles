@@ -36,3 +36,19 @@ eval "$(zoxide init zsh)"
 
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
+
+# Auto-start tmux
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+    session_count=$(tmux list-sessions 2>/dev/null | wc -l)
+    if [ "$session_count" -gt 1 ]; then
+        # Multiple sessions exist - show sessionx picker
+        tmux new-session -d -s temp_session 2>/dev/null || true
+        tmux attach-session -t temp_session \; run-shell "~/.config/tmux/plugins/tmux-sessionx/scripts/sessionx.sh"
+    elif [ "$session_count" -eq 1 ]; then
+        # One session exists - create new session
+        tmux new-session
+    else
+        # No sessions - create first session
+        tmux new-session
+    fi
+fi
