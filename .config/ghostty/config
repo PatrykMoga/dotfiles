@@ -15,3 +15,7 @@ shell-integration-features = cursor,sudo,title
 
 # Visual bell for tab indicators
 window-decoration = true
+
+# Window size (columns x rows)
+window-width = 155
+window-height = 50
