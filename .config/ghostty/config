@@ -18,4 +18,4 @@ window-decoration = true
 
 # Window size (columns x rows)
 window-width = 155
-window-height = 50
+window-height = 55
