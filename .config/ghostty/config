@@ -19,3 +19,6 @@ window-decoration = true
 # Window size (columns x rows)
 window-width = 155
 window-height = 55
+
+# No quit confirmation
+confirm-close-surface = false
