@@ -25,7 +25,7 @@ set -g status-style "bg=#{FLEXOKI_BG},fg=#{FLEXOKI_TX}"
 
 # Window status
 set -g window-status-format "#[fg=#{FLEXOKI_TX_2}] [#I] #W"
-set -g window-status-current-format "#[fg=#{FLEXOKI_TX},bold] [#I] #W"
+set -g window-status-current-format "#[fg=#5E409D,bold] [#I] #W"
 set -g window-status-separator ""
 
 # Pane borders
