@@ -1,6 +1,8 @@
 # theme = Xcode Dark
-theme = Catppuccin Macchiato 
-font-family = SF Mono
+# font-family = SF Mono
+
+theme = Flexoki Dark
+font-family = JetBrains Mono
 
 background-opacity = 1.0
 background-blur-radius = 20

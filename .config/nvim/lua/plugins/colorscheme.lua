@@ -1,17 +1,14 @@
 return {
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "kepano/flexoki-neovim",
+    name = "flexoki",
     lazy = false,
     priority = 1000,
-    opts = {
-      flavour = "macchiato",
-    },
   },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = "flexoki-dark",
     },
   },
 }

@@ -1,0 +1,40 @@
+# Flexoki Dark Theme for tmux
+# Based on https://stephango.com/flexoki
+
+# Flexoki color palette
+%hidden FLEXOKI_BG="#1c1b1a"
+%hidden FLEXOKI_BG_2="#282726"
+%hidden FLEXOKI_UI="#343331"
+%hidden FLEXOKI_UI_2="#403e3c"
+%hidden FLEXOKI_UI_3="#575653"
+%hidden FLEXOKI_TX="#cecdc3"
+%hidden FLEXOKI_TX_2="#878580"
+%hidden FLEXOKI_TX_3="#6f6e69"
+
+%hidden FLEXOKI_RED="#d14d41"
+%hidden FLEXOKI_ORANGE="#da702c"
+%hidden FLEXOKI_YELLOW="#d0a215"
+%hidden FLEXOKI_GREEN="#879a39"
+%hidden FLEXOKI_CYAN="#3aa99f"
+%hidden FLEXOKI_BLUE="#4385be"
+%hidden FLEXOKI_PURPLE="#8b7ec8"
+%hidden FLEXOKI_MAGENTA="#ce5d97"
+
+# Status bar
+set -g status-style "bg=#{FLEXOKI_BG},fg=#{FLEXOKI_TX}"
+
+# Window status
+set -g window-status-format "#[fg=#{FLEXOKI_TX_2}] [#I] #W"
+set -g window-status-current-format "#[fg=#{FLEXOKI_TX},bold] [#I] #W"
+set -g window-status-separator ""
+
+# Pane borders
+set -g pane-border-style "fg=#{FLEXOKI_UI_2}"
+set -g pane-active-border-style "fg=#{FLEXOKI_PURPLE}"
+
+# Message styling
+set -g message-style "bg=#{FLEXOKI_UI},fg=#{FLEXOKI_TX}"
+set -g message-command-style "bg=#{FLEXOKI_UI},fg=#{FLEXOKI_TX}"
+
+# Mode styling (copy mode, etc.)
+set -g mode-style "bg=#{FLEXOKI_UI_2},fg=#{FLEXOKI_TX}"
