@@ -1,57 +1,66 @@
 # dotfiles
 
-Personal macOS configuration files managed with GNU Stow.
+Personal macOS terminal environment. Managed with GNU Stow.
 
-## Tools
+![Terminal Setup](assets/terminal-setup.png)
 
-- **tmux** - Terminal multiplexer with catppuccin theme, floax popups, and sessionx session management
-- **neovim** - Primary text editor
-- **starship** - Cross-shell prompt
-- **yazi** - Terminal file manager
-- **ghostty** - GPU-accelerated terminal
-- **alacritty** - Alternative terminal emulator
-- **zsh** - Shell with zoxide, fzf, and autosuggestions
+## Features
 
-## Prerequisites
+- **Tmux** — Session management, floating panes, lazygit popup
+- **Neovim** — LazyVim configuration
+- **Yazi** — Terminal file manager
+- **Ghostty** — Primary terminal (Alacritty as backup)
+- **Starship** — Minimal prompt
+- **SketchyBar** — Custom macOS menu bar
+- **Claude Code** — AI-assisted git workflow via shell aliases
 
-- [Homebrew](https://brew.sh)
-- [GNU Stow](https://www.gnu.org/software/stow/) (`brew install stow`)
-- [tmux](https://github.com/tmux/tmux) (`brew install tmux`)
-- [Neovim](https://neovim.io) (`brew install neovim`)
-- [Starship](https://starship.rs) (`brew install starship`)
-- [Yazi](https://yazi-rs.github.io) (`brew install yazi`)
-- [zoxide](https://github.com/ajeetdsouza/zoxide) (`brew install zoxide`)
-- [fzf](https://github.com/junegunn/fzf) (`brew install fzf`)
-- [bat](https://github.com/sharkdp/bat) (`brew install bat`)
-- [lazygit](https://github.com/jesseduffield/lazygit) (`brew install lazygit`)
+All tools use [Flexoki Dark](https://stephango.com/flexoki) for consistent theming.
 
-## Installation
+## Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/Developer/dotfiles
+git clone https://github.com/patrykmoga/dotfiles.git ~/Developer/dotfiles
 cd ~/Developer/dotfiles
 stow -d . -t ~ home
 ```
 
-To preview what stow will do:
-```bash
-stow -n -d . -t ~ --verbose home
-```
+Preview changes first: `stow -n -d . -t ~ --verbose home`
 
-## tmux Keybindings
+## What's Included
 
-Prefix is `` ` `` (backtick). Double-tap for literal backtick.
+| Tool | Config | Notes |
+|------|--------|-------|
+| Zsh | `.zshrc`, `.profile` | Auto-starts tmux, zoxide, fzf |
+| Tmux | `.config/tmux/` | Backtick prefix, tpm plugins |
+| Neovim | `.config/nvim/` | LazyVim-based |
+| Starship | `.config/starship.toml` | Minimal left, info right |
+| Yazi | `.config/yazi/` | Flexoki theme |
+| Ghostty | `.config/ghostty/` | Primary terminal |
+| SketchyBar | `.config/sketchybar/` | macOS menu bar |
+| Claude | `.claude/` | Settings, skills, agents (submodule) |
+
+## Tmux Keybindings
+
+Prefix: `` ` `` (backtick)
 
 | Key | Action |
 |-----|--------|
-| `` ` + p `` | Toggle floating pane (floax) |
-| `` ` + o `` | Session picker (sessionx) |
-| `` ` + g `` | Lazygit popup |
-| `` ` + r `` | Reload tmux config |
+| `o` | Session picker |
+| `f` | Floating pane |
+| `g` | Lazygit |
+| `p` | Pomodoro |
+| `r` | Reload config |
 
-## Shell Features
+## Shell Aliases
 
-- Opens tmux automatically on new terminal
-- `y` - Launch yazi file manager with directory changing
-- `z` - Jump to directories with zoxide
-- fzf keybindings for history and file search
+```bash
+y      # Yazi with directory changing
+z      # Zoxide jump
+gc     # Git commit (via Claude)
+gcp    # Git commit + push (via Claude)
+gpr    # Create PR (via Claude)
+```
+
+## Requirements
+
+[Homebrew](https://brew.sh), then: `brew install stow tmux neovim starship yazi zoxide fzf bat lazygit`
