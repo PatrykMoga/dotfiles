@@ -48,6 +48,8 @@ Prefix: `` ` `` (backtick)
 | `o` | Session picker |
 | `f` | Floating pane |
 | `g` | Lazygit |
+| `K` | Keyboard clean |
+| `N` | Random project name |
 | `p` | Pomodoro |
 | `r` | Reload config |
 
@@ -60,6 +62,13 @@ gc     # Git commit (via Claude)
 gcp    # Git commit + push (via Claude)
 gpr    # Create PR (via Claude)
 ```
+
+## Scripts
+
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `keyboard-clean.swift` | Blocks keyboard for 30s cleaning | `kc` alias. ESC+Enter to exit early. |
+| `random-name.sh` | Generate random project names | Used by tmux `N` binding |
 
 ## Requirements
 
