@@ -5,7 +5,6 @@ alias vim='nvim'
 alias v='nvim'
 alias lg='lazygit'
 alias c='claude'
-alias cr='claude -r'
 alias ls='ls --color=auto'
 alias b='brew'
 alias bout='brew outdated'
@@ -19,6 +18,7 @@ alias dot="cd ~/Developer/dotfiles/"
 # Git
 alias gpf='git push --force-with-lease'
 alias grl='git reset HEAD~1'
+alias gc='claude -p "/git:commit" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git commit*)"'
 
 . "$HOME/.local/bin/env"
 
