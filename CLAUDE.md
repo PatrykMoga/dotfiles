@@ -65,9 +65,17 @@ Flexoki Dark is used consistently across tmux, neovim, ghostty, yazi, and termin
 - `o` - Session picker (sessionx)
 - `f` - Floating pane (floax)
 - `g` - Lazygit popup
+- `K` - Keyboard clean (30s blocker)
 - `p` - Pomodoro timer
 - `N` - Random project name
 - `r` - Reload config
+
+### Scripts
+
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `keyboard-clean.swift` | Blocks keyboard for 30s cleaning | `kc` alias. ESC+Enter to exit early. Requires Accessibility permission on first run. |
+| `random-name.sh` | Generate random project names | Used by tmux binding |
 
 ## Working with This Repo
 
