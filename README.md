@@ -30,12 +30,12 @@ Personal macOS configuration files managed with GNU Stow.
 ```bash
 git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/Developer/dotfiles
 cd ~/Developer/dotfiles
-stow .
+stow -d . -t ~ home
 ```
 
 To preview what stow will do:
 ```bash
-stow -n --verbose .
+stow -n -d . -t ~ --verbose home
 ```
 
 ## tmux Keybindings
