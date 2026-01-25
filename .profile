@@ -19,6 +19,8 @@ alias dot="cd ~/Developer/dotfiles/"
 alias gpf='git push --force-with-lease'
 alias grl='git reset HEAD~1'
 alias gc='claude -p "/git:commit" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git commit*)"'
+alias gcp='claude -p "/git:commit-push" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git commit*)" "Bash(git push*)"'
+alias gpr='claude -p "/git:pull-request" --allowedTools "Bash(git status*)" "Bash(git log*)" "Bash(git branch*)" "Bash(gh pr*)"'
 
 . "$HOME/.local/bin/env"
 
