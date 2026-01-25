@@ -32,7 +32,7 @@ dotfiles/
 │   ├── .config/    # XDG config directory
 │   ├── .zshrc      # Zsh initialization
 │   ├── .profile    # Shell aliases and environment
-│   └── scripts/    # Utility scripts
+│   └── .scripts/   # Utility scripts
 └── .stow-local-ignore  # Patterns excluded from symlinking
 ```
 
