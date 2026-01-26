@@ -19,8 +19,12 @@ shell-integration-features = cursor,sudo,title
 window-decoration = true
 
 # Window size (columns x rows)
-window-width = 155
-window-height = 55
+window-width = 120
+window-height = 35
 
 # No quit confirmation
 confirm-close-surface = false
+
+# Symmetric padding for status bar alignment
+window-padding-x = 2,2
+window-padding-balance = true
