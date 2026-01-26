@@ -53,6 +53,33 @@ dotfiles/
 
 Flexoki Dark is used consistently across tmux, neovim, ghostty, yazi, and terminal emulators.
 
+**Flexoki Reference**: https://stephango.com/flexoki
+
+Base colors (Dark):
+| Name | Hex |
+|------|-----|
+| black | #100F0F |
+| bg | #1C1B1A |
+| bg-2 | #282726 |
+| ui | #343331 |
+| ui-2 | #403E3C |
+| ui-3 | #575653 |
+| tx-3 | #6F6E69 |
+| tx-2 | #878580 |
+| tx | #B7B5AC |
+
+Accent colors (Dark, 400):
+| Color | Hex |
+|-------|-----|
+| Red | #D14D41 |
+| Orange | #DA702C |
+| Yellow | #D0A215 |
+| Green | #879A39 |
+| Cyan | #3AA99F |
+| Blue | #4385BE |
+| Purple | #8B7EC8 |
+| Magenta | #CE5D97 |
+
 ### Claude Integration
 
 `.claude/` is a git submodule containing Claude Code settings, skills, and agents. Shell aliases in `.profile` use Claude for git operations:
