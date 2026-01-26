@@ -3,7 +3,7 @@
 # Aliases
 alias vim='nvim'
 alias v='nvim'
-alias lg='lazygit'
+alias lg='lazygit --use-config-file="$HOME/.config/lazygit/config.yml"'
 alias c='claude'
 alias ls='ls --color=auto'
 alias b='brew'
