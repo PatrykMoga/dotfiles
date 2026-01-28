@@ -15,6 +15,8 @@ alias t='tmux'
 alias dev="cd ~/Developer/"
 alias dot="cd ~/Developer/dotfiles/"
 alias kc='~/.scripts/keyboard-clean'
+alias pk='pkill -f pnpm'
+alias pp='ps aux | grep pnpm'
 
 # Git
 alias gpf='git push --force-with-lease'
