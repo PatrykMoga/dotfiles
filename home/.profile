@@ -1,24 +1,26 @@
 . "$HOME/.cargo/env"
 
 # Aliases
+alias sp='source ~/.profile'
 alias vim='nvim'
 alias v='nvim'
 alias lg='lazygit --use-config-file="$HOME/.config/lazygit/config.yml"'
 alias c='claude'
+alias cc='claude --continue'
+alias cr='claude --resume'
 alias ls='ls --color=auto'
 alias b='brew'
 alias bout='brew outdated'
 alias bug='brew upgrade'
 alias l='ls -la'
 alias t='tmux'
-
+alias sr=''
 alias dev="cd ~/Developer/"
 alias dot="cd ~/Developer/dotfiles/"
 alias kc='~/.scripts/keyboard-clean'
 alias pk='pkill -f pnpm'
 alias pp='ps aux | grep pnpm'
-
-# Git
+alias an='pnpm create astro@latest'
 alias gpf='git push --force-with-lease'
 alias grl='git reset HEAD~1'
 alias gc='claude -p "/git:commit" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git add*)" "Bash(git commit*)" "Bash(git submodule*)" "Bash(git -C*)"'
