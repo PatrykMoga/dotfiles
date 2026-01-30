@@ -1,3 +1,9 @@
+customCommands:
+  - key: "C"
+    context: "files"
+    description: "Commit with Claude"
+    command: 'claude -p "/commit" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git add*)" "Bash(git commit*)" "Bash(git submodule*)" "Bash(git -C*)"'
+    output: terminal
 gui:
   theme:
     activeBorderColor:
