@@ -2,7 +2,17 @@ customCommands:
   - key: "C"
     context: "files"
     description: "Commit with Claude"
-    command: 'claude -p "/commit --no-summary" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git add*)" "Bash(git commit*)" "Bash(git submodule*)" "Bash(git -C*)"'
+    prompts:
+      - type: "menu"
+        title: "Commit options"
+        options:
+          - name: "Commit only"
+            value: ""
+            key: "C"
+          - name: "Commit and push"
+            value: "--push"
+            key: "P"
+    command: 'claude -p "/commit {{index .PromptResponses 0}} --no-summary" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git add*)" "Bash(git commit*)" "Bash(git push*)" "Bash(git submodule*)" "Bash(git -C*)"'
     output: terminal
 gui:
   theme:
