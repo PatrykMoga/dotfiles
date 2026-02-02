@@ -26,6 +26,7 @@ alias grl='git reset HEAD~1'
 alias gc='claude -p "/commit" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git add*)" "Bash(git commit*)" "Bash(git submodule*)" "Bash(git -C*)"'
 alias gcp='claude -p "/commit --push" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git add*)" "Bash(git commit*)" "Bash(git push*)" "Bash(git submodule*)" "Bash(git -C*)"'
 alias gpr='claude -p "/pull-request" --allowedTools "Bash(git status*)" "Bash(git log*)" "Bash(git branch*)" "Bash(gh pr*)"'
+alias el='~/.claude/skills/build/scripts/explore-loop.sh'
 
 . "$HOME/.local/bin/env"
 
