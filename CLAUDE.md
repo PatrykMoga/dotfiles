@@ -104,6 +104,11 @@ Accent colors (Dark, 400):
 | `keyboard-clean.swift` | Blocks keyboard for 30s cleaning | `kc` alias. ESC+Enter to exit early. Requires Accessibility permission on first run. |
 | `random-name.sh` | Generate random project names | Used by tmux binding |
 
+## Plan History
+
+| Description | Plan File | Status | Date |
+|---|---|---|---|
+
 ## Working with This Repo
 
 - After adding/moving files in `home/`, re-stow to update symlinks
