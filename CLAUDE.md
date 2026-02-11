@@ -108,6 +108,7 @@ Accent colors (Dark, 400):
 
 | Description | Plan File | Status | Date |
 |---|---|---|---|
+| Restructure Astro skill with modular references and expanded coverage | N/A (approved in chat) | done | 2026-02-11 |
 
 ## Working with This Repo
 
