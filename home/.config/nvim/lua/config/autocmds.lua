@@ -24,10 +24,19 @@ local function prompt_enhance()
     return
   end
 
-  vim.notify("Enhancing prompt...", vim.log.levels.INFO)
+  vim.cmd('echo "Enhancing prompt..."')
   vim.cmd("redraw")
 
-  local enhanced = vim.fn.system('claude -p "/prompt-enhance" --model haiku 2>/dev/null', input)
+  local sys = "You transform rough prompts into testable specifications."
+    .. " Read the input. Output it unchanged, then append:"
+    .. " Validation Criteria (2-4 bullets), Test Steps (2-5 bullets), Done Conditions (2-4 bullets)."
+    .. " Your ENTIRE output is the enhanced prompt."
+    .. " The first line of your output MUST be the first line of the input."
+    .. " No introductions. No commentary."
+  local cmd = 'claude -p --system-prompt '
+    .. vim.fn.shellescape(sys)
+    .. ' --model haiku --tools "" 2>/dev/null'
+  local enhanced = vim.fn.system(cmd, input)
   if vim.v.shell_error ~= 0 or enhanced == "" then
     vim.notify("Enhancement failed", vim.log.levels.ERROR)
     return
