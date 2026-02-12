@@ -27,16 +27,15 @@ local function prompt_enhance()
 
   vim.notify("Enhancing prompt...", vim.log.levels.INFO)
 
-  local sys = "You transform rough prompts into testable specifications."
-    .. " Read the input. Output it unchanged, then append:"
-    .. " Validation Criteria (2-4 bullets), Test Steps (2-5 bullets), Done Conditions (2-4 bullets)."
-    .. " Your ENTIRE output is the enhanced prompt."
-    .. " The first line of your output MUST be the first line of the input."
-    .. " No introductions. No commentary."
+  local sys = "You rewrite rough prompts into clear, specific, testable specifications."
+    .. " Improve the input: fix grammar, add missing context, make intent explicit, remove ambiguity."
+    .. " Then append: Validation Criteria (2-4 bullets), Test Steps (2-5 bullets), Done Conditions (2-4 bullets)."
+    .. " Start directly with the rewritten prompt text. No labels, no preamble, no 'REWRITTEN PROMPT:', no 'Here is'."
+    .. " Use plain text with simple dash bullets. No markdown headers, no bold, no formatting."
 
   vim.system(
-    { "claude", "-p", "--system-prompt", sys, "--model", "haiku", "--tools", "" },
-    { text = true, stdin = input, timeout = 30000 },
+    { "claude", "-p", "--system-prompt", sys, "--model", "haiku", "--tools", "", "--setting-sources", "" },
+    { text = true, stdin = input, timeout = 30000, cwd = "/tmp" },
     function(result)
       vim.schedule(function()
         if result.code ~= 0 then
