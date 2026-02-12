@@ -89,6 +89,7 @@ Accent colors (Dark, 400):
 
 ### Tmux Key Bindings (prefix = \`)
 
+- `E` - Prompt enhancer (clipboard → claude → replace input)
 - `o` - Session picker (sessionx)
 - `f` - Floating pane (floax)
 - `g` - Lazygit popup
@@ -111,6 +112,7 @@ Accent colors (Dark, 400):
 | Restructure Astro skill with modular references and expanded coverage | N/A (approved in chat) | done | 2026-02-11 |
 | Update React skill with 6 additions and create React Email skill | N/A (approved in chat) | done | 2026-02-11 |
 | Create /audit skill for instruction quality evaluation | N/A (approved in chat) | done | 2026-02-11 |
+| Tmux prompt enhancer that adds validation, test steps, and done conditions | N/A (approved in chat) | done | 2026-02-12 |
 
 ## Working with This Repo
 
