@@ -113,6 +113,7 @@ Accent colors (Dark, 400):
 | Update React skill with 6 additions and create React Email skill | N/A (approved in chat) | done | 2026-02-11 |
 | Create /audit skill for instruction quality evaluation | N/A (approved in chat) | done | 2026-02-11 |
 | Tmux prompt enhancer that adds validation, test steps, and done conditions | N/A (approved in chat) | done | 2026-02-12 |
+| Replace clipboard-based prompt-enhance with signal file + nvim vim-mode integration | N/A (approved in chat) | done | 2026-02-12 |
 
 ## Working with This Repo
 
