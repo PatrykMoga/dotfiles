@@ -25,7 +25,7 @@ local function prompt_enhance()
     return
   end
 
-  vim.notify("Enhancing prompt...", vim.log.levels.INFO)
+  vim.notify("Enhancing prompt...", "info", { id = "prompt_enhance", timeout = false })
 
   local sys = "You rewrite rough prompts into clear, specific, testable specifications."
     .. " Improve the input: fix grammar, add missing context, make intent explicit, remove ambiguity."
@@ -39,20 +39,20 @@ local function prompt_enhance()
     function(result)
       vim.schedule(function()
         if result.code ~= 0 then
-          vim.notify("Enhancement failed: " .. (result.stderr or "unknown error"), vim.log.levels.ERROR)
+          vim.notify("Enhancement failed: " .. (result.stderr or "unknown error"), "error", { id = "prompt_enhance" })
           return
         end
 
         local enhanced = result.stdout
         if not enhanced or enhanced == "" then
-          vim.notify("Enhancement returned empty result", vim.log.levels.WARN)
+          vim.notify("Enhancement returned empty result", "warn", { id = "prompt_enhance" })
           return
         end
 
         enhanced = enhanced:gsub("\n$", "")
         local new_lines = vim.split(enhanced, "\n", { plain = true })
         vim.api.nvim_buf_set_lines(buf, 0, -1, false, new_lines)
-        vim.notify("Prompt enhanced!", vim.log.levels.INFO)
+        vim.notify("Prompt enhanced!", "info", { id = "prompt_enhance" })
       end)
     end
   )
