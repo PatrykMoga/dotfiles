@@ -25,7 +25,7 @@ local function prompt_enhance()
     return
   end
 
-  vim.notify("Enhancing prompt...", "info", { id = "prompt_enhance", timeout = false })
+  vim.notify("Enhancing prompt...", vim.log.levels.INFO, { id = "prompt_enhance", timeout = false })
 
   local sys = "You rewrite rough prompts into clear, specific, testable specifications."
     .. " Improve the input: fix grammar, add missing context, make intent explicit, remove ambiguity."
@@ -38,21 +38,35 @@ local function prompt_enhance()
     { text = true, stdin = input, timeout = 30000, cwd = "/tmp" },
     function(result)
       vim.schedule(function()
+        -- Signal means process was killed (e.g. timeout hit on hung auth)
+        if result.signal and result.signal ~= 0 then
+          vim.notify("Enhancement timed out — check `claude` auth", vim.log.levels.ERROR, { id = "prompt_enhance" })
+          return
+        end
+
         if result.code ~= 0 then
-          vim.notify("Enhancement failed: " .. (result.stderr or "unknown error"), "error", { id = "prompt_enhance" })
+          local stderr = result.stderr or ""
+          local stdout = result.stdout or ""
+          local msg = (stderr ~= "" and stderr or stdout):match("[^\n]+") or ("exit code " .. (result.code or "?"))
+          vim.notify("Enhancement failed: " .. msg, vim.log.levels.ERROR, { id = "prompt_enhance" })
           return
         end
 
         local enhanced = result.stdout
         if not enhanced or enhanced == "" then
-          vim.notify("Enhancement returned empty result", "warn", { id = "prompt_enhance" })
+          vim.notify("Enhancement returned empty result", vim.log.levels.WARN, { id = "prompt_enhance" })
+          return
+        end
+
+        if enhanced:match("^Error") or enhanced:match("authenticate") or enhanced:match("login") or enhanced:match("expired") or enhanced:match("unauthorized") then
+          vim.notify("Enhancement returned auth error — check `claude` auth", vim.log.levels.WARN, { id = "prompt_enhance" })
           return
         end
 
         enhanced = enhanced:gsub("\n$", "")
         local new_lines = vim.split(enhanced, "\n", { plain = true })
         vim.api.nvim_buf_set_lines(buf, 0, -1, false, new_lines)
-        vim.notify("Prompt enhanced!", "info", { id = "prompt_enhance" })
+        vim.notify("Prompt enhanced!", vim.log.levels.INFO, { id = "prompt_enhance" })
       end)
     end
   )
