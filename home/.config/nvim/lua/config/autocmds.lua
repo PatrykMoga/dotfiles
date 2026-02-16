@@ -58,11 +58,6 @@ local function prompt_enhance()
           return
         end
 
-        if enhanced:match("^Error") or enhanced:match("authenticate") or enhanced:match("login") or enhanced:match("expired") or enhanced:match("unauthorized") then
-          vim.notify("Enhancement returned auth error — check `claude` auth", vim.log.levels.WARN, { id = "prompt_enhance" })
-          return
-        end
-
         enhanced = enhanced:gsub("\n$", "")
         local new_lines = vim.split(enhanced, "\n", { plain = true })
         vim.api.nvim_buf_set_lines(buf, 0, -1, false, new_lines)
