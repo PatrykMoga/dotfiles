@@ -116,6 +116,7 @@ Accent colors (Dark, 400):
 | Create /audit skill for instruction quality evaluation | N/A (approved in chat) | done | 2026-02-11 |
 | Tmux prompt enhancer that adds validation, test steps, and done conditions | N/A (approved in chat) | done | 2026-02-12 |
 | Replace clipboard-based prompt-enhance with signal file + nvim vim-mode integration | N/A (approved in chat) | done | 2026-02-12 |
+| Fix semantic theme token gaps: dark mode guidance, bg-white, state tokens, single-example anchoring | N/A (approved in chat) | done | 2026-02-18 |
 
 ## Working with This Repo
 
