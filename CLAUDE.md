@@ -86,6 +86,7 @@ Accent colors (Dark, 400):
 - `gc` → Claude commit skill
 - `gcp` → Claude commit-push skill
 - `gpr` → Claude pull-request skill
+- `an` → Astro project starter (React, Tailwind, sitemap, view transitions)
 
 ### Tmux Key Bindings (prefix = \`)
 
@@ -104,6 +105,7 @@ Accent colors (Dark, 400):
 |--------|---------|-------|
 | `keyboard-clean.swift` | Blocks keyboard for 30s cleaning | `kc` alias. ESC+Enter to exit early. Requires Accessibility permission on first run. |
 | `random-name.sh` | Generate random project names | Used by tmux binding |
+| `astro-starter.sh` | Scaffold Astro with React, Tailwind, sitemap, view transitions | `an my-project`. Injects ClientRouter post-create. |
 
 ## Plan History
 
