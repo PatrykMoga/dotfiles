@@ -86,7 +86,16 @@ Accent colors (Dark, 400):
 - `gc` → Claude commit skill
 - `gcp` → Claude commit-push skill
 - `gpr` → Claude pull-request skill
+- `gr` → Claude release skill
 - `an` → Astro project starter (React, Tailwind, sitemap, view transitions)
+
+### Git Workflow
+
+Two-branch model: `main` (default, feature accumulation) and `production` (prod deploys).
+
+- **Features**: `feat/*` → PR to `main` → accumulate → `/release` merges to `production`
+- **Hotfixes**: `fix/*` from `production` → PR with `--base production` → merge back to `main`
+- **Releases**: `/release` from main calculates semver bump, merges to production, tags, pushes
 
 ### Tmux Key Bindings (prefix = \`)
 
@@ -117,6 +126,7 @@ Accent colors (Dark, 400):
 | Tmux prompt enhancer that adds validation, test steps, and done conditions | N/A (approved in chat) | done | 2026-02-12 |
 | Replace clipboard-based prompt-enhance with signal file + nvim vim-mode integration | N/A (approved in chat) | done | 2026-02-12 |
 | Fix semantic theme token gaps: dark mode guidance, bg-white, state tokens, single-example anchoring | N/A (approved in chat) | done | 2026-02-18 |
+| Update git workflow: main + production branches, /release skill | N/A (approved in chat) | done | 2026-02-18 |
 
 ## Working with This Repo
 
