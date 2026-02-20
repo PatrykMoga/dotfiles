@@ -9,6 +9,18 @@
 
 -- Prompt Transform: auto-transform Claude Code input when triggered from tmux (prefix + E)
 
+local prompt_dir = vim.fn.expand("~/.claude/skills/prompt-enhance/prompts/")
+
+local function read_prompt(name)
+  local path = prompt_dir .. name .. ".txt"
+  local lines = vim.fn.readfile(path)
+  if #lines == 0 then
+    vim.notify("Missing prompt: " .. path, vim.log.levels.ERROR)
+    return nil
+  end
+  return table.concat(lines, " ")
+end
+
 --- Shared helper that detects a signal file, reads the buffer, calls claude with
 --- the given system prompt, and replaces the buffer with the result.
 --- @param signal_path string  Absolute path to the signal file
@@ -70,40 +82,20 @@ local function run_prompt_transform(signal_path, system_prompt, label)
 end
 
 local function enhance()
-  local sys = "You rewrite rough prompts into clear, specific, testable specifications."
-    .. " Improve the input: fix grammar, add missing context, make intent explicit, remove ambiguity."
-    .. " Then append: Validation Criteria (2-4 bullets), Test Steps (2-5 bullets), Done Conditions (2-4 bullets)."
-    .. " Start directly with the rewritten prompt text. No labels, no preamble, no 'REWRITTEN PROMPT:', no 'Here is'."
-    .. " Use plain text with simple dash bullets. No markdown headers, no bold, no formatting."
-
+  local sys = read_prompt("enhance")
+  if not sys then return false end
   return run_prompt_transform("/tmp/.prompt-enhance-signal", sys, "Enhancing prompt...")
 end
 
 local function optimize()
-  local sys = "You optimize prompts for clarity and effectiveness."
-    .. " Rewrite the input to: fix grammar and typos, make intent explicit, add missing context the AI would need,"
-    .. " remove ambiguity, tighten wording."
-    .. " Do not add sections, bullet lists, validation criteria, or any structural additions."
-    .. " Do not expand scope or change the user's intent."
-    .. " Output only the rewritten prompt. No preamble, no labels, no explanation."
-    .. " Use plain text. No markdown headers, no bold, no formatting."
-
+  local sys = read_prompt("optimize")
+  if not sys then return false end
   return run_prompt_transform("/tmp/.prompt-optimize-signal", sys, "Optimizing prompt...")
 end
 
 local function socratic()
-  local sys = "You rewrite direct prompts into Socratic-style prompts that force the AI to think before acting."
-    .. " Follow this structure strictly:"
-    .. " 1. One theoretical question: \"What makes this type of thing work well?\" or \"What would an expert consider first?\""
-    .. " 2. One framework question: \"What principles or constraints apply here?\""
-    .. " 3. One direct command that executes the original task: \"Now do it for [specific case].\""
-    .. " Keep it to 2-3 questions followed by a clear command. No more."
-    .. " The command at the end must match the user's original intent exactly — same scope, same deliverable."
-    .. " If the input describes a specific problem or asks \"why\", the questions must probe that specific situation"
-    .. " — not abstract principles. Never ask questions the AI already knows the answer to."
-    .. " Output only the rewritten prompt. No preamble, no labels, no explanation."
-    .. " Use plain text. No markdown headers, no bold, no formatting."
-
+  local sys = read_prompt("socratic")
+  if not sys then return false end
   return run_prompt_transform("/tmp/.prompt-socratic-signal", sys, "Socratic rewrite...")
 end
 
