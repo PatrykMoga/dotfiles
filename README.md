@@ -28,30 +28,30 @@ Preview changes first: `stow -n -d . -t ~ --verbose home`
 
 ## What's Included
 
-| Tool | Config | Notes |
-|------|--------|-------|
-| Zsh | `.zshrc`, `.profile` | Auto-starts tmux, zoxide, fzf |
-| Tmux | `.config/tmux/` | Backtick prefix, tpm plugins |
-| Neovim | `.config/nvim/` | LazyVim-based |
-| Starship | `.config/starship.toml` | Minimal left, info right |
-| Yazi | `.config/yazi/` | Flexoki theme |
-| Ghostty | `.config/ghostty/` | Primary terminal |
-| SketchyBar | `.config/sketchybar/` | macOS menu bar |
-| Claude | `.claude/` | Settings, skills, agents (submodule) |
+| Tool       | Config                  | Notes                                |
+| ---------- | ----------------------- | ------------------------------------ |
+| Zsh        | `.zshrc`, `.profile`    | Auto-starts tmux, zoxide, fzf        |
+| Tmux       | `.config/tmux/`         | Backtick prefix, tpm plugins         |
+| Neovim     | `.config/nvim/`         | LazyVim-based                        |
+| Starship   | `.config/starship.toml` | Minimal left, info right             |
+| Yazi       | `.config/yazi/`         | Flexoki theme                        |
+| Ghostty    | `.config/ghostty/`      | Primary terminal                     |
+| SketchyBar | `.config/sketchybar/`   | macOS menu bar                       |
+| Claude     | `.claude/`              | Settings, skills, agents (submodule) |
 
 ## Tmux Keybindings
 
 Prefix: `` ` `` (backtick)
 
-| Key | Action |
-|-----|--------|
-| `o` | Session picker |
-| `f` | Floating pane |
-| `g` | Lazygit |
-| `K` | Keyboard clean |
+| Key | Action              |
+| --- | ------------------- |
+| `o` | Session picker      |
+| `f` | Floating pane       |
+| `g` | Lazygit             |
+| `K` | Keyboard clean      |
 | `N` | Random project name |
-| `p` | Pomodoro |
-| `r` | Reload config |
+| `p` | Pomodoro            |
+| `r` | Reload config       |
 
 ## Shell Aliases
 
@@ -65,10 +65,10 @@ gpr    # Create PR (via Claude)
 
 ## Scripts
 
-| Script | Purpose | Usage |
-|--------|---------|-------|
+| Script                 | Purpose                          | Usage                                |
+| ---------------------- | -------------------------------- | ------------------------------------ |
 | `keyboard-clean.swift` | Blocks keyboard for 30s cleaning | `kc` alias. ESC+Enter to exit early. |
-| `random-name.sh` | Generate random project names | Used by tmux `N` binding |
+| `random-name.sh`       | Generate random project names    | Used by tmux `N` binding             |
 
 ## Requirements
 
