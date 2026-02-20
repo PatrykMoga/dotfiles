@@ -81,10 +81,10 @@ local function run_prompt_transform(signal_path, system_prompt, label)
   return true
 end
 
-local function enhance()
-  local sys = read_prompt("enhance")
+local function blueprint()
+  local sys = read_prompt("blueprint")
   if not sys then return false end
-  return run_prompt_transform("/tmp/.prompt-enhance-signal", sys, "Enhancing prompt...")
+  return run_prompt_transform("/tmp/.prompt-blueprint-signal", sys, "Blueprint...")
 end
 
 local function optimize()
@@ -106,7 +106,7 @@ local function on_buf_read()
   if socratic() then
     return
   end
-  enhance()
+  blueprint()
 end
 
 vim.api.nvim_create_autocmd("BufReadPost", {
