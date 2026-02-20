@@ -128,6 +128,7 @@ Two-branch model: `main` (default, feature accumulation) and `production` (prod 
 | Fix semantic theme token gaps: dark mode guidance, bg-white, state tokens, single-example anchoring | N/A (approved in chat) | done | 2026-02-18 |
 | Update git workflow: main + production branches, /release skill | N/A (approved in chat) | done | 2026-02-18 |
 | Add Socratic mode to prompt-enhance | N/A (approved in chat) | done | 2026-02-20 |
+| Consolidate agents: delete planner/test-writer, embed testing in coding agents | N/A (approved in chat) | done | 2026-02-20 |
 
 ## Working with This Repo
 
