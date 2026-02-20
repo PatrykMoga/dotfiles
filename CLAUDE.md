@@ -99,7 +99,7 @@ Two-branch model: `main` (default, feature accumulation) and `production` (prod 
 
 ### Tmux Key Bindings (prefix = \`)
 
-- `E` - Prompt menu (Enhance / Socratic rewrite)
+- `E` - Prompt menu (Optimize / Enhance / Socratic)
 - `o` - Session picker (sessionx)
 - `f` - Floating pane (floax)
 - `g` - Lazygit popup
