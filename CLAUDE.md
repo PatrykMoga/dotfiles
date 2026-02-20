@@ -99,7 +99,7 @@ Two-branch model: `main` (default, feature accumulation) and `production` (prod 
 
 ### Tmux Key Bindings (prefix = \`)
 
-- `E` - Prompt enhancer (clipboard → claude → replace input)
+- `E` - Prompt menu (Optimize / Enhance / Socratic)
 - `o` - Session picker (sessionx)
 - `f` - Floating pane (floax)
 - `g` - Lazygit popup
@@ -127,6 +127,7 @@ Two-branch model: `main` (default, feature accumulation) and `production` (prod 
 | Replace clipboard-based prompt-enhance with signal file + nvim vim-mode integration | N/A (approved in chat) | done | 2026-02-12 |
 | Fix semantic theme token gaps: dark mode guidance, bg-white, state tokens, single-example anchoring | N/A (approved in chat) | done | 2026-02-18 |
 | Update git workflow: main + production branches, /release skill | N/A (approved in chat) | done | 2026-02-18 |
+| Add Socratic mode to prompt-enhance | N/A (approved in chat) | done | 2026-02-20 |
 
 ## Working with This Repo
 
