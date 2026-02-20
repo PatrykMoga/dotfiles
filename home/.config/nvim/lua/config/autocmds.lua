@@ -12,7 +12,7 @@
 local prompt_dir = vim.fn.expand("~/.claude/skills/prompt-enhance/prompts/")
 
 local function read_prompt(name)
-  local path = prompt_dir .. name .. ".txt"
+  local path = prompt_dir .. name .. ".md"
   local lines = vim.fn.readfile(path)
   if #lines == 0 then
     vim.notify("Missing prompt: " .. path, vim.log.levels.ERROR)
