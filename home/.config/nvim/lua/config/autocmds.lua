@@ -79,6 +79,18 @@ local function enhance()
   return run_prompt_transform("/tmp/.prompt-enhance-signal", sys, "Enhancing prompt...")
 end
 
+local function optimize()
+  local sys = "You optimize prompts for clarity and effectiveness."
+    .. " Rewrite the input to: fix grammar and typos, make intent explicit, add missing context the AI would need,"
+    .. " remove ambiguity, tighten wording."
+    .. " Do not add sections, bullet lists, validation criteria, or any structural additions."
+    .. " Do not expand scope or change the user's intent."
+    .. " Output only the rewritten prompt. No preamble, no labels, no explanation."
+    .. " Use plain text. No markdown headers, no bold, no formatting."
+
+  return run_prompt_transform("/tmp/.prompt-optimize-signal", sys, "Optimizing prompt...")
+end
+
 local function socratic()
   local sys = "You rewrite direct prompts into Socratic-style prompts that trigger deeper reasoning."
     .. " Instead of instructions, produce a series of guided questions that:"
@@ -87,6 +99,9 @@ local function socratic()
     .. " - End with a synthesis directive (\"Now apply that to [specific case]\")"
     .. " The questions should force the AI to reason through WHY before WHAT."
     .. " Keep the user's original intent and scope — don't expand or reduce what they asked for."
+    .. " If the input describes a specific problem, failure, or asks 'why', the questions must probe the specifics"
+    .. " — context, inputs, constraints, timeline — not abstract principles."
+    .. " Never ask questions the AI already knows the answer to."
     .. " Output only the rewritten Socratic prompt. No preamble, no labels, no explanation."
     .. " Use plain text. No markdown headers, no bold, no formatting."
 
@@ -94,6 +109,9 @@ local function socratic()
 end
 
 local function on_buf_read()
+  if optimize() then
+    return
+  end
   if socratic() then
     return
   end
