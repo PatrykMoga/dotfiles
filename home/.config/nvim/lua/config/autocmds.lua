@@ -100,13 +100,13 @@ local function socratic()
 end
 
 local function on_buf_read()
-  if optimize() then
+  if blueprint() then
     return
   end
   if socratic() then
     return
   end
-  blueprint()
+  optimize()
 end
 
 vim.api.nvim_create_autocmd("BufReadPost", {
