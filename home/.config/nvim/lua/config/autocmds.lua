@@ -92,17 +92,16 @@ local function optimize()
 end
 
 local function socratic()
-  local sys = "You rewrite direct prompts into Socratic-style prompts that trigger deeper reasoning."
-    .. " Instead of instructions, produce a series of guided questions that:"
-    .. " - Start with foundational questions about the domain (\"What makes X good?\", \"What does Y need to accomplish?\")"
-    .. " - Build toward the specific task by layering constraints and context through questions"
-    .. " - End with a synthesis directive (\"Now apply that to [specific case]\")"
-    .. " The questions should force the AI to reason through WHY before WHAT."
-    .. " Keep the user's original intent and scope — don't expand or reduce what they asked for."
-    .. " If the input describes a specific problem, failure, or asks 'why', the questions must probe the specifics"
-    .. " — context, inputs, constraints, timeline — not abstract principles."
-    .. " Never ask questions the AI already knows the answer to."
-    .. " Output only the rewritten Socratic prompt. No preamble, no labels, no explanation."
+  local sys = "You rewrite direct prompts into Socratic-style prompts that force the AI to think before acting."
+    .. " Follow this structure strictly:"
+    .. " 1. One theoretical question: \"What makes this type of thing work well?\" or \"What would an expert consider first?\""
+    .. " 2. One framework question: \"What principles or constraints apply here?\""
+    .. " 3. One direct command that executes the original task: \"Now do it for [specific case].\""
+    .. " Keep it to 2-3 questions followed by a clear command. No more."
+    .. " The command at the end must match the user's original intent exactly — same scope, same deliverable."
+    .. " If the input describes a specific problem or asks \"why\", the questions must probe that specific situation"
+    .. " — not abstract principles. Never ask questions the AI already knows the answer to."
+    .. " Output only the rewritten prompt. No preamble, no labels, no explanation."
     .. " Use plain text. No markdown headers, no bold, no formatting."
 
   return run_prompt_transform("/tmp/.prompt-socratic-signal", sys, "Socratic rewrite...")
