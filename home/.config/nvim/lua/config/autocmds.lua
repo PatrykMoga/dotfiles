@@ -47,12 +47,12 @@ local function run_prompt_transform(signal_path, system_prompt, label)
 
   vim.system(
     { "claude", "-p", "--system-prompt", system_prompt, "--model", "haiku", "--tools", "", "--setting-sources", "" },
-    { text = true, stdin = input, timeout = 30000, cwd = "/tmp" },
+    { text = true, stdin = input, cwd = "/tmp" },
     function(result)
       vim.schedule(function()
-        -- Signal means process was killed (e.g. timeout hit on hung auth)
+        -- Signal means process was killed externally
         if result.signal and result.signal ~= 0 then
-          vim.notify("Transform timed out — check `claude` auth", vim.log.levels.ERROR, { id = "prompt_transform" })
+          vim.notify("Transform killed by signal", vim.log.levels.ERROR, { id = "prompt_transform" })
           return
         end
 
