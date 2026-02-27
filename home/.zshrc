@@ -14,6 +14,9 @@ eval "$(starship init zsh)"
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/patrykmoga/.lmstudio/bin"
 
+# bun
+export PATH="$HOME/.bun/bin:$PATH"
+
 # pnpm
 export PNPM_HOME="/Users/patrykmoga/Library/pnpm"
 case ":$PATH:" in
