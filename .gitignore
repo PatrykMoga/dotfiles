@@ -1,3 +1,4 @@
 home/.config/tmux/plugins
 home/.scripts/keyboard-clean
 .claude/settings.local.json
+/.remember
