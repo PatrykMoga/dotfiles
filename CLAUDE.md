@@ -129,6 +129,7 @@ Two-branch model: `main` (default, feature accumulation) and `production` (prod 
 | Update git workflow: main + production branches, /release skill | N/A (approved in chat) | done | 2026-02-18 |
 | Add Socratic mode to prompt-enhance | N/A (approved in chat) | done | 2026-02-20 |
 | Consolidate agents: delete planner/test-writer, embed testing in coding agents | N/A (approved in chat) | done | 2026-02-20 |
+| Replace /interview skill with inline CLAUDE.md guidance and plan-mode default | N/A (approved in chat) | done | 2026-04-22 |
 
 ## Working with This Repo
 
