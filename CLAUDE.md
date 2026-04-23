@@ -87,7 +87,8 @@ Accent colors (Dark, 400):
 - `gcp` → Claude commit-push skill
 - `gpr` → Claude pull-request skill
 - `gr` → Claude release skill
-- `an` → Astro project starter (React, Tailwind, sitemap, view transitions)
+- `ai` → Astro project init (React, Tailwind, sitemap, view transitions) + git + private repo + main/production branches
+- `xi` → Xcode project init (iOS 26 / Swift 6 / iPhone-only build settings) + git + private repo + main/production branches
 
 ### Git Workflow
 
@@ -114,7 +115,8 @@ Two-branch model: `main` (default, feature accumulation) and `production` (prod 
 |--------|---------|-------|
 | `keyboard-clean.swift` | Blocks keyboard for 30s cleaning | `kc` alias. ESC+Enter to exit early. Requires Accessibility permission on first run. |
 | `random-name.sh` | Generate random project names | Used by tmux binding |
-| `astro-starter.sh` | Scaffold Astro with React, Tailwind, sitemap, view transitions | `an my-project`. Injects ClientRouter post-create. |
+| `astro-init.sh` | Scaffold Astro (React, Tailwind, sitemap, view transitions) + git init + private GitHub repo + main/production branches | `ai my-project`. Injects ClientRouter post-create. Requires `gh` authenticated. |
+| `xcode-init.sh` | Initialize fresh Xcode project: iOS 26 / Swift 6 / iPhone-only build settings, .gitignore, git init, private GitHub repo, main + production branches | `xi` alias. Run from project root after creating .xcodeproj in Xcode. Requires `gh` authenticated. |
 
 ## Plan History
 
