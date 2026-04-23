@@ -131,6 +131,7 @@ Two-branch model: `main` (default, feature accumulation) and `production` (prod 
 | Consolidate agents: delete planner/test-writer, embed testing in coding agents | N/A (approved in chat) | done | 2026-02-20 |
 | Replace /interview skill with inline CLAUDE.md guidance and plan-mode default | N/A (approved in chat) | done | 2026-04-22 |
 | Extend "How I communicate" with antecedents + exploratory-phrasing rules | N/A (approved in chat) | done | 2026-04-23 |
+| Consolidate 25 Swift + Web skills into 2 umbrellas (swift-rules, web-rules); keep ios-init + ios-app-icon standalone | N/A (approved in chat) | done | 2026-04-23 |
 
 ## Working with This Repo
 
