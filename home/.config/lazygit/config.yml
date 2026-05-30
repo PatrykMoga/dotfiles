@@ -12,9 +12,10 @@ customCommands:
           - name: "Commit and push"
             value: "--push"
             key: "P"
-    # CLAUDE_GIT_NESTED=1 so the Stop auto-checkpoint hook skips this headless
-    # commit (it already commits) — otherwise it would loop, re-invoking /commit.
-    command: 'CLAUDE_GIT_NESTED=1 claude -p "/commit {{index .PromptResponses 0}} --no-summary" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git add*)" "Bash(git commit*)" "Bash(git push*)" "Bash(git submodule*)" "Bash(git -C*)"'
+    # git-ai-commit.sh: one-shot claude -p for the message (~10s) + privacy-safe
+    # submodule handling. Commits what you've staged in the UI. The menu value is
+    # "" (commit only) or "--push".
+    command: '~/.scripts/git-ai-commit.sh {{index .PromptResponses 0}}'
     output: terminal
 gui:
   theme:
