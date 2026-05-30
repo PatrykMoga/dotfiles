@@ -9,7 +9,7 @@
 
 -- Prompt Transform: auto-transform Claude Code input when triggered from tmux (prefix + E)
 
-local prompt_dir = vim.fn.expand("~/.claude/skills/prompt-enhance/prompts/")
+local prompt_dir = vim.fn.expand("~/.claude/skills/enhance-prompt/prompts/")
 
 local function read_prompt(name)
   local path = prompt_dir .. name .. ".md"
@@ -110,7 +110,7 @@ local function on_buf_read()
 end
 
 vim.api.nvim_create_autocmd("BufReadPost", {
-  group = vim.api.nvim_create_augroup("prompt_enhance", { clear = true }),
+  group = vim.api.nvim_create_augroup("enhance_prompt", { clear = true }),
   callback = on_buf_read,
 })
 

@@ -15,10 +15,22 @@
 #   --push   also push committed repos (submodules first, then parent)
 set -euo pipefail
 
+# --- DEBUG TRACE (temporary) -----------------------------------------------
+# Logs each step to /tmp/git-ai-commit.log to diagnose the lazygit parent-bump
+# gap. Remove this block once the bug is understood.
+TRACE_LOG=/tmp/git-ai-commit.log
+trace() { echo "[$(date '+%H:%M:%S')] $*" >> "$TRACE_LOG"; }
+trace "=== invoked: args=[$*] cwd=$(pwd) shell=$0 ==="
+trace "PATH=$PATH"
+trace "claude resolves to: $(command -v claude 2>&1 || echo 'NOT FOUND')"
+# ---------------------------------------------------------------------------
+
 push=false
 [[ "${1:-}" == "--push" ]] && push=true
+trace "push=$push"
 
-git rev-parse --git-dir >/dev/null 2>&1 || { echo "Not a git repo." >&2; exit 1; }
+git rev-parse --git-dir >/dev/null 2>&1 || { echo "Not a git repo." >&2; trace "ABORT: not a git repo"; exit 1; }
+trace "git root: $(git rev-parse --show-toplevel 2>&1)"
 
 # ai_message <git-dir-or-path> -> prints a one-line conventional commit message.
 # Falls back to a generic message if claude -p fails or returns nothing.
@@ -52,29 +64,44 @@ if [[ -f ".gitmodules" ]]; then
   while IFS= read -r sub_path; do
     [[ -z "$sub_path" ]] && continue
     sub_name="$(basename "$sub_path")"
+    trace "submodule loop: sub_path=[$sub_path] sub_name=[$sub_name]"
+    trace "  staged-in-sub? $(git -C "$sub_path" diff --cached --quiet 2>/dev/null && echo no || echo YES)"
+    trace "  pointer-stale? $(git diff --quiet -- "$sub_path" 2>/dev/null && echo no || echo YES)"
 
     if ! git -C "$sub_path" diff --cached --quiet 2>/dev/null; then
       # Case 1: staged work inside the submodule — commit it first.
+      trace "  -> case 1: committing inside submodule"
       git -C "$sub_path" commit -q -m "$(ai_message "$sub_path")"
+      trace "  submodule committed, new HEAD=$(git -C "$sub_path" rev-parse --short HEAD)"
     elif git diff --quiet -- "$sub_path" 2>/dev/null; then
       # No staged submodule work AND the parent pointer is already up to date —
       # nothing to do for this submodule.
+      trace "  -> skip: nothing staged, pointer current"
       continue
+    else
+      trace "  -> case 2: pointer stale only"
     fi
 
     # Bump the parent pointer (covers both cases 1 and 2).
+    trace "  staging parent gitlink: git add $sub_path"
     git add "$sub_path"
+    trace "  parent staged? $(git diff --cached --quiet -- "$sub_path" && echo NO-CHANGE || echo yes)"
     git commit -q -m "chore: update ${sub_name} submodule"
+    trace "  parent committed: $(git rev-parse --short HEAD) ($(git log -1 --format=%s))"
     committed_any=true
     $push && pushed_subs+=("$sub_path")
   done < <(git submodule status | awk '{print $2}')
+  trace "submodule loop done"
 fi
 
 # --- Main repo: AI message for remaining staged changes ----------------------
+trace "main repo: staged? $(git diff --cached --quiet && echo no || echo YES)"
 if ! git diff --cached --quiet; then
+  trace "  committing main repo"
   git commit -q -m "$(ai_message .)"
   committed_any=true
 fi
+trace "committed_any=$committed_any"
 
 if [[ "$committed_any" == false ]]; then
   echo "Nothing staged. Run 'git add' first." >&2
