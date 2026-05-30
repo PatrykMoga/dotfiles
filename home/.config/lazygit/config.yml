@@ -12,7 +12,9 @@ customCommands:
           - name: "Commit and push"
             value: "--push"
             key: "P"
-    command: 'claude -p "/commit {{index .PromptResponses 0}} --no-summary" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git add*)" "Bash(git commit*)" "Bash(git push*)" "Bash(git submodule*)" "Bash(git -C*)"'
+    # CLAUDE_GIT_NESTED=1 so the Stop auto-checkpoint hook skips this headless
+    # commit (it already commits) — otherwise it would loop, re-invoking /commit.
+    command: 'CLAUDE_GIT_NESTED=1 claude -p "/commit {{index .PromptResponses 0}} --no-summary" --allowedTools "Bash(git status*)" "Bash(git diff*)" "Bash(git log*)" "Bash(git add*)" "Bash(git commit*)" "Bash(git push*)" "Bash(git submodule*)" "Bash(git -C*)"'
     output: terminal
 gui:
   theme:
