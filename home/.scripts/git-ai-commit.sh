@@ -43,12 +43,26 @@ committed_any=false
 pushed_subs=()
 
 # --- Submodules: AI message for the submodule, generic bump for the parent ---
+# Two cases both result in a parent pointer bump:
+#   1. The submodule has staged changes  -> commit them (AI message), then bump.
+#   2. The submodule has no staged changes but the parent gitlink is stale
+#      (its HEAD moved — e.g. committed by the auto-checkpoint hook or by hand)
+#      -> just bump the parent pointer, no submodule commit.
 if [[ -f ".gitmodules" ]]; then
   while IFS= read -r sub_path; do
     [[ -z "$sub_path" ]] && continue
-    git -C "$sub_path" diff --cached --quiet 2>/dev/null && continue
     sub_name="$(basename "$sub_path")"
-    git -C "$sub_path" commit -q -m "$(ai_message "$sub_path")"
+
+    if ! git -C "$sub_path" diff --cached --quiet 2>/dev/null; then
+      # Case 1: staged work inside the submodule — commit it first.
+      git -C "$sub_path" commit -q -m "$(ai_message "$sub_path")"
+    elif git diff --quiet -- "$sub_path" 2>/dev/null; then
+      # No staged submodule work AND the parent pointer is already up to date —
+      # nothing to do for this submodule.
+      continue
+    fi
+
+    # Bump the parent pointer (covers both cases 1 and 2).
     git add "$sub_path"
     git commit -q -m "chore: update ${sub_name} submodule"
     committed_any=true
