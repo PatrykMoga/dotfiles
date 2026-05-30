@@ -9,28 +9,20 @@
 # message — a submodule repo may be private while the parent is public, so its
 # history must not leak into the parent.
 #
+# Works from the superproject root (bumps parent as a side effect) AND from
+# inside a submodule (lazygit runs the command with cwd set to the submodule
+# when one is selected — see the superproject block near the end).
+#
 # Commits only what is already staged (like the old skill). Stage first.
 #
 # Usage: git-ai-commit.sh [--push]
-#   --push   also push committed repos (submodules first, then parent)
+#   --push   also push committed repos (submodule first, then parent)
 set -euo pipefail
-
-# --- DEBUG TRACE (temporary) -----------------------------------------------
-# Logs each step to /tmp/git-ai-commit.log to diagnose the lazygit parent-bump
-# gap. Remove this block once the bug is understood.
-TRACE_LOG=/tmp/git-ai-commit.log
-trace() { echo "[$(date '+%H:%M:%S')] $*" >> "$TRACE_LOG"; }
-trace "=== invoked: args=[$*] cwd=$(pwd) shell=$0 ==="
-trace "PATH=$PATH"
-trace "claude resolves to: $(command -v claude 2>&1 || echo 'NOT FOUND')"
-# ---------------------------------------------------------------------------
 
 push=false
 [[ "${1:-}" == "--push" ]] && push=true
-trace "push=$push"
 
-git rev-parse --git-dir >/dev/null 2>&1 || { echo "Not a git repo." >&2; trace "ABORT: not a git repo"; exit 1; }
-trace "git root: $(git rev-parse --show-toplevel 2>&1)"
+git rev-parse --git-dir >/dev/null 2>&1 || { echo "Not a git repo." >&2; exit 1; }
 
 # ai_message <git-dir-or-path> -> prints a one-line conventional commit message.
 # Falls back to a generic message if claude -p fails or returns nothing.
@@ -54,7 +46,7 @@ ai_message() {
 committed_any=false
 pushed_subs=()
 
-# --- Submodules: AI message for the submodule, generic bump for the parent ---
+# --- Submodules (when run from the superproject) -----------------------------
 # Two cases both result in a parent pointer bump:
 #   1. The submodule has staged changes  -> commit them (AI message), then bump.
 #   2. The submodule has no staged changes but the parent gitlink is stale
@@ -64,50 +56,63 @@ if [[ -f ".gitmodules" ]]; then
   while IFS= read -r sub_path; do
     [[ -z "$sub_path" ]] && continue
     sub_name="$(basename "$sub_path")"
-    trace "submodule loop: sub_path=[$sub_path] sub_name=[$sub_name]"
-    trace "  staged-in-sub? $(git -C "$sub_path" diff --cached --quiet 2>/dev/null && echo no || echo YES)"
-    trace "  pointer-stale? $(git diff --quiet -- "$sub_path" 2>/dev/null && echo no || echo YES)"
 
     if ! git -C "$sub_path" diff --cached --quiet 2>/dev/null; then
       # Case 1: staged work inside the submodule — commit it first.
-      trace "  -> case 1: committing inside submodule"
       git -C "$sub_path" commit -q -m "$(ai_message "$sub_path")"
-      trace "  submodule committed, new HEAD=$(git -C "$sub_path" rev-parse --short HEAD)"
     elif git diff --quiet -- "$sub_path" 2>/dev/null; then
-      # No staged submodule work AND the parent pointer is already up to date —
-      # nothing to do for this submodule.
-      trace "  -> skip: nothing staged, pointer current"
+      # Nothing staged and pointer current — nothing to do for this submodule.
       continue
-    else
-      trace "  -> case 2: pointer stale only"
     fi
+    # else: case 2 (pointer stale only) — fall through to the bump.
 
-    # Bump the parent pointer (covers both cases 1 and 2).
-    trace "  staging parent gitlink: git add $sub_path"
     git add "$sub_path"
-    trace "  parent staged? $(git diff --cached --quiet -- "$sub_path" && echo NO-CHANGE || echo yes)"
     git commit -q -m "chore: update ${sub_name} submodule"
-    trace "  parent committed: $(git rev-parse --short HEAD) ($(git log -1 --format=%s))"
     committed_any=true
     $push && pushed_subs+=("$sub_path")
   done < <(git submodule status | awk '{print $2}')
-  trace "submodule loop done"
 fi
 
 # --- Main repo: AI message for remaining staged changes ----------------------
-trace "main repo: staged? $(git diff --cached --quiet && echo no || echo YES)"
 if ! git diff --cached --quiet; then
-  trace "  committing main repo"
   git commit -q -m "$(ai_message .)"
   committed_any=true
 fi
-trace "committed_any=$committed_any"
+
+# --- If we ran INSIDE a submodule, bump the parent pointer -------------------
+# lazygit runs the custom command with cwd set to the SUBMODULE when a submodule
+# is selected, so the block above never sees a parent. Walk up to the
+# superproject and bump the gitlink with a generic message (privacy: never
+# carries the submodule's own message into the parent). Runs even when nothing
+# was staged here, so it also RECOVERS a stale pointer left by an earlier run
+# that committed the submodule but didn't bump the parent.
+super="$(git rev-parse --show-superproject-working-tree 2>/dev/null || true)"
+if [[ -n "$super" ]]; then
+  my_root="$(git rev-parse --show-toplevel)"
+  sub_rel="${my_root#"$super"/}"          # e.g. home/.claude
+  sub_name="$(basename "$sub_rel")"
+  # Push the submodule's own remote FIRST so the parent pointer is reachable.
+  if [[ "$push" == true && "$committed_any" == true ]]; then
+    git push
+  fi
+  if ! git -C "$super" diff --quiet -- "$sub_rel" 2>/dev/null; then
+    git -C "$super" add "$sub_rel"
+    git -C "$super" commit -q -m "chore: update ${sub_name} submodule"
+    $push && git -C "$super" push
+    committed_any=true
+  fi
+  if [[ "$committed_any" == true ]]; then
+    git log -1 --oneline
+    exit 0
+  fi
+fi
 
 if [[ "$committed_any" == false ]]; then
   echo "Nothing staged. Run 'git add' first." >&2
   exit 1
 fi
 
+# Normal (run-from-superproject) push path.
 if [[ "$push" == true ]]; then
   for sub_path in "${pushed_subs[@]}"; do
     git -C "$sub_path" push
