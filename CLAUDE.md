@@ -135,6 +135,7 @@ Two-branch model: `main` (default, feature accumulation) and `production` (prod 
 | Extend "How I communicate" with antecedents + exploratory-phrasing rules | N/A (approved in chat) | done | 2026-04-23 |
 | Consolidate 25 Swift + Web skills into 2 umbrellas (swift-rules, web-rules); keep ios-init + ios-app-icon standalone | N/A (approved in chat) | done | 2026-04-23 |
 | Consolidate skill-builder/skills-guide/subagents-guide → skill-rules + subagents-rules | N/A (approved in chat) | done | 2026-04-23 |
+| Add /design thinking-only skill (UI/UX sibling of /think; loads design context, hands off to /prototype, /tweak, /build) | N/A (approved in chat) | done | 2026-05-30 |
 
 ## Working with This Repo
 
