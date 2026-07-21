@@ -29,11 +29,19 @@ git rev-parse --git-dir >/dev/null 2>&1 || { echo "Not a git repo." >&2; exit 1;
 ai_message() {
   local dir="$1" diff msg
   diff="$(git -C "$dir" diff --cached)"
+  # Huge diffs (mass deletes) drown the instruction and the model hallucinates
+  # an unrelated task — past ~50KB the file list is all the message needs.
+  if (( ${#diff} > 50000 )); then
+    diff="$(git -C "$dir" diff --cached --stat)"
+  fi
   # `|| true` so a failed claude -p can't trip `set -e`/pipefail — the empty
   # check below falls back to a generic message.
+  # --disallowedTools: deny beats the settings.json Bash(*) allowlist — a
+  # message writer must have zero tool access even if it goes off the rails.
   msg="$(printf '%s\n' "$diff" | CLAUDE_GIT_NESTED=1 claude -p \
     "Write ONE line: a Conventional Commits message (type(scope): summary) for this staged diff. Output only the message, no quotes, no prose, no body." \
-    --strict-mcp-config --allowedTools "" 2>/dev/null \
+    --strict-mcp-config --allowedTools "" \
+    --disallowedTools "Bash" "Read" "Write" "Edit" "WebFetch" "WebSearch" "Task" 2>/dev/null \
     | grep -m1 -v '^[[:space:]]*$' | head -c 200 || true)"
   # Strip surrounding whitespace/backticks the model sometimes adds.
   msg="$(printf '%s' "$msg" | sed 's/^[[:space:]]*`*//; s/`*[[:space:]]*$//')"
