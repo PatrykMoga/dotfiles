@@ -40,7 +40,7 @@ eval "$(zoxide init zsh)"
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
-# Auto-start tmux
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+# Auto-start tmux (Ghostty only)
+if [ "$TERM_PROGRAM" = "ghostty" ] && command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
     tmux attach || tmux new-session
 fi
