@@ -117,6 +117,12 @@ FIXTURES=(
   "reset time in the past|12000|$(rl 88 $past 10 $in_6d)|1|$in_6d|200000"
   "ISO 8601 resets_at (live API form)|12000|{\"five_hour\":{\"used_percentage\":4.2,\"resets_at\":\"$(date -u -r $in_4h '+%Y-%m-%dT%H:%M:%S.000000+00:00')\"},\"seven_day\":{\"used_percentage\":10.7,\"resets_at\":\"$(date -u -r $in_6d '+%Y-%m-%dT%H:%M:%SZ')\"}}|1|$in_6d|200000"
   "1M context window|180000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|1000000"
+  "gauge 0% (empty track)|0|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
+  "gauge 6%|12000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
+  "gauge 25%|50000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
+  "gauge 50%|100000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
+  "gauge 75%|150000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
+  "gauge 100% (full)|200000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
   "everything empty|null||-|null|200000"
 )
 
