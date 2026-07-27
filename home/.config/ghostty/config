@@ -2,7 +2,7 @@
 # font-family = SF Mono
 
 theme = Flexoki Dark
-font-family = JetBrains Mono
+font-family = JetBrainsMono Nerd Font
 
 background-opacity = 1.0
 background-blur-radius = 20
