@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-pnpm create astro@latest "$@" --add react --add tailwind --add sitemap
+pnpm create astro@latest "$@" --add svelte --add tailwind --add sitemap
 
 # Find project dir from first non-flag arg
 dir=""
