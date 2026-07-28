@@ -82,11 +82,10 @@ Accent colors (Dark, 400):
 
 ### Claude Integration
 
-`.claude/` is a git submodule containing Claude Code settings, skills, and agents. Shell aliases in `.profile` use Claude for git operations:
-- `gc` → Claude commit skill
-- `gcp` → Claude commit-push skill
-- `gpr` → Claude pull-request skill
-- `gr` → Claude release skill
+`.claude/` is a git submodule containing Claude Code settings, skills, and agents. Shell aliases in `.profile`:
+- `gc` / `gcp` → AI commit (+push) via `~/.scripts/git-ai-commit.sh` (single-shot `claude -p` message)
+- `gpr` → `/pull-request` skill headless
+- Releases → run `/release` from an interactive claude session (no alias; print mode can't service it)
 - `ai` → Astro project init (Svelte, Tailwind, sitemap, view transitions) + git + private repo + main/production branches
 - `xi` → Xcode project init (iOS 26 / Swift 6 / iPhone-only build settings) + git + private repo + main/production branches
 
@@ -117,25 +116,6 @@ Two-branch model: `main` (default, feature accumulation) and `production` (prod 
 | `random-name.sh` | Generate random project names | Used by tmux binding |
 | `astro-init.sh` | Scaffold Astro (Svelte, Tailwind, sitemap, view transitions) + git init + private GitHub repo + main/production branches | `ai my-project`. Injects ClientRouter post-create. Requires `gh` authenticated. |
 | `xcode-init.sh` | Initialize fresh Xcode project: iOS 26 / Swift 6 / iPhone-only build settings, .gitignore, git init, private GitHub repo, main + production branches | `xi` alias. Run from project root after creating .xcodeproj in Xcode. Requires `gh` authenticated. |
-
-## Plan History
-
-| Description | Plan File | Status | Date |
-|---|---|---|---|
-| Restructure Astro skill with modular references and expanded coverage | N/A (approved in chat) | done | 2026-02-11 |
-| Update React skill with 6 additions and create React Email skill | N/A (approved in chat) | done | 2026-02-11 |
-| Create /audit skill for instruction quality evaluation | N/A (approved in chat) | done | 2026-02-11 |
-| Tmux prompt enhancer that adds validation, test steps, and done conditions | N/A (approved in chat) | done | 2026-02-12 |
-| Replace clipboard-based prompt-enhance with signal file + nvim vim-mode integration | N/A (approved in chat) | done | 2026-02-12 |
-| Fix semantic theme token gaps: dark mode guidance, bg-white, state tokens, single-example anchoring | N/A (approved in chat) | done | 2026-02-18 |
-| Update git workflow: main + production branches, /release skill | N/A (approved in chat) | done | 2026-02-18 |
-| Add Socratic mode to prompt-enhance | N/A (approved in chat) | done | 2026-02-20 |
-| Consolidate agents: delete planner/test-writer, embed testing in coding agents | N/A (approved in chat) | done | 2026-02-20 |
-| Replace /interview skill with inline CLAUDE.md guidance and plan-mode default | N/A (approved in chat) | done | 2026-04-22 |
-| Extend "How I communicate" with antecedents + exploratory-phrasing rules | N/A (approved in chat) | done | 2026-04-23 |
-| Consolidate 25 Swift + Web skills into 2 umbrellas (swift-rules, web-rules); keep ios-init + ios-app-icon standalone | N/A (approved in chat) | done | 2026-04-23 |
-| Consolidate skill-builder/skills-guide/subagents-guide → skill-rules + subagents-rules | N/A (approved in chat) | done | 2026-04-23 |
-| Add /design thinking-only skill (UI/UX sibling of /think; loads design context, hands off to /prototype, /tweak, /build) | N/A (approved in chat) | done | 2026-05-30 |
 
 ## Working with This Repo
 

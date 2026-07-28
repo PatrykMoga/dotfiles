@@ -33,11 +33,11 @@ alias grl='git reset HEAD~1'
 # skill) and handles submodules privacy-safely. Stage first, then commit.
 alias gc='~/.scripts/git-ai-commit.sh'
 alias gcp='~/.scripts/git-ai-commit.sh --push'
-# gpr/gr still use their skills (unchanged). CLAUDE_GIT_NESTED=1 stops the Stop
+# gpr still uses its skill. CLAUDE_GIT_NESTED=1 stops the Stop
 # auto-checkpoint hook from looping when these headless claude -p sessions end.
+# Releases: run /release from an interactive claude session (the gr print-mode
+# alias could not service gh/AskUserQuestion and silently failed).
 alias gpr='CLAUDE_GIT_NESTED=1 claude -p "/pull-request" --allowedTools "Bash(git status*)" "Bash(git log*)" "Bash(git branch*)" "Bash(gh pr*)"'
-alias gr='CLAUDE_GIT_NESTED=1 claude -p "/release" --allowedTools "Bash(git log*)" "Bash(git tag*)" "Bash(git branch*)" "Bash(git checkout*)" "Bash(git merge*)" "Bash(git push*)" "Bash(git status*)" "Bash(git diff*)" "Bash(git add*)" "Bash(git commit*)"'
-alias rl='~/.claude/hooks/ralph-loop.sh'
 
 . "$HOME/.local/bin/env"
 
