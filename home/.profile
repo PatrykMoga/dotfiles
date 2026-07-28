@@ -26,6 +26,7 @@ alias pk='pkill -f pnpm'
 alias pp='ps aux | grep pnpm'
 alias ai='~/.scripts/astro-init.sh'
 alias xi='~/.scripts/xcode-init.sh'
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias gpf='git push --force-with-lease'
 alias grl='git reset HEAD~1'
 # gc/gcp: fast model-free-orchestration commit. git-ai-commit.sh makes a single
