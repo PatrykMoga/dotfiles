@@ -28,7 +28,8 @@ set -g status-style "bg=#{FLEXOKI_BG},fg=#{FLEXOKI_TX}"
 # Code hooks. The Claude glyph renders only when that option is set, coloured
 # blue/yellow/green for working/waiting/idle. Window names stay untouched.
 set -g window-status-format "#[fg=#{FLEXOKI_TX_2}] [#I] #{?#{@agent_state},#[fg=#{?#{==:#{@agent_state},working},#{FLEXOKI_BLUE},#{?#{==:#{@agent_state},waiting},#{FLEXOKI_YELLOW},#{FLEXOKI_GREEN}}}]󱜙 ,}#[fg=#{FLEXOKI_TX_2}]#W"
-set -g window-status-current-format "#[fg=#{FLEXOKI_TX},bold] [#I] #{?#{@agent_state},#[fg=#{?#{==:#{@agent_state},working},#{FLEXOKI_BLUE},#{?#{==:#{@agent_state},waiting},#{FLEXOKI_YELLOW},#{FLEXOKI_GREEN}}}]󱜙 ,}#[fg=#{FLEXOKI_TX},bold]#W"
+# current-format is set in tmux.conf (purple index) — don't duplicate it here,
+# it sources this file first and the later definition would win.
 set -g window-status-separator ""
 
 # Pane borders
