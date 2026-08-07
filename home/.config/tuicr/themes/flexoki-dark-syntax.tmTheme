@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Flexoki Dark syntax theme for tuicr — https://stephango.com/flexoki -->
+<plist version="1.0">
+<dict>
+  <key>name</key>
+  <string>Flexoki Dark</string>
+  <key>settings</key>
+  <array>
+    <dict>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#B7B5AC</string>
+        <key>background</key>
+        <string>#1C1B1A</string>
+        <key>caret</key>
+        <string>#D0A215</string>
+        <key>selection</key>
+        <string>#343331</string>
+        <key>lineHighlight</key>
+        <string>#282726</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>name</key>
+      <string>Comment</string>
+      <key>scope</key>
+      <string>comment</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#6F6E69</string>
+        <key>fontStyle</key>
+        <string>italic</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>name</key>
+      <string>Keyword</string>
+      <key>scope</key>
+      <string>keyword, storage, storage.type</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#8B7EC8</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>name</key>
+      <string>String</string>
+      <key>scope</key>
+      <string>string</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#879A39</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>name</key>
+      <string>Constant</string>
+      <key>scope</key>
+      <string>constant, constant.numeric, constant.language</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#DA702C</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>name</key>
+      <string>Function and Type</string>
+      <key>scope</key>
+      <string>entity.name.function, support.function, entity.name.type, support.type</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#4385BE</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>name</key>
+      <string>Variable</string>
+      <key>scope</key>
+      <string>variable, variable.parameter, support.variable</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#B7B5AC</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>name</key>
+      <string>Tag and Attribute</string>
+      <key>scope</key>
+      <string>entity.name.tag, entity.other.attribute-name</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#CE5D97</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>name</key>
+      <string>Invalid</string>
+      <key>scope</key>
+      <string>invalid, invalid.illegal</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#100F0F</string>
+        <key>background</key>
+        <string>#D14D41</string>
+      </dict>
+    </dict>
+  </array>
+</dict>
+</plist>

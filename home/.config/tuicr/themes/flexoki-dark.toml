@@ -1,0 +1,53 @@
+# Flexoki Dark — https://stephango.com/flexoki
+# Matches tmux, yazi, ghostty and nvim themes in this dotfiles repo.
+
+panel_bg = "#1C1B1A"        # base-950
+bg_highlight = "#343331"    # base-850
+fg_primary = "#B7B5AC"      # base-300
+fg_secondary = "#878580"    # base-500
+fg_dim = "#6F6E69"          # base-600
+
+diff_add = "#879A39"        # green-400
+diff_add_bg = "#252D09"     # green-900
+diff_del = "#D14D41"        # red-400
+diff_del_bg = "#3E1715"     # red-900
+diff_context = "#B7B5AC"
+diff_hunk_header = "#4385BE" # blue-400
+expanded_context_fg = "#6F6E69"
+
+syntax_add_bg = "#252D09"
+syntax_del_bg = "#3E1715"
+syntax_theme = "flexoki-dark-syntax.tmTheme"
+
+file_added = "#879A39"      # green
+file_modified = "#D0A215"   # yellow
+file_deleted = "#D14D41"    # red
+file_renamed = "#8B7EC8"    # purple
+
+reviewed = "#879A39"
+pending = "#D0A215"
+
+comment_note = "#4385BE"       # blue
+comment_suggestion = "#3AA99F" # cyan
+comment_issue = "#D14D41"      # red
+comment_praise = "#879A39"     # green
+
+border_focused = "#3AA99F"
+border_unfocused = "#403E3C"   # base-800
+status_bar_bg = "#282726"      # base-900
+cursor_color = "#D0A215"
+cursor_line_bg = "#282726"
+branch_name = "#8B7EC8"
+help_indicator = "#878580"
+
+message_info_fg = "#100F0F"
+message_info_bg = "#4385BE"
+message_warning_fg = "#100F0F"
+message_warning_bg = "#D0A215"
+message_error_fg = "#100F0F"
+message_error_bg = "#D14D41"
+update_badge_fg = "#100F0F"
+update_badge_bg = "#D0A215"
+
+mode_fg = "#100F0F"
+mode_bg = "#3AA99F"
