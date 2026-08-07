@@ -7,14 +7,20 @@
 #                           and it needs root, hence the password prompt
 #
 #   ./caffeine.sh toggle    start if off, stop if on (prompts for sudo)
-#   ./caffeine.sh sync      point @caffeine at the real process state
+#   ./caffeine.sh sync      point @caffeine at the real state
+#   ./caffeine.sh watch     lid watcher (started by toggle, exits when caffeine does)
 set -u
 
 # Match our exact invocation, not any caffeinate: other tools (Claude Code among
 # them) run their own short-lived `caffeinate -i -t N` we must neither count nor kill.
 FLAGS='-disu'
 
-is_on() { pgrep -xf "caffeinate $FLAGS" >/dev/null 2>&1; }
+# pmset is the source of truth, not the caffeinate process: `disablesleep` is a
+# system setting that outlives a logout, while caffeinate dies with the session.
+# Reading the process instead would show "off" on a Mac that still can't sleep.
+is_on() { pmset -g | grep -qE 'SleepDisabled[[:space:]]+1'; }
+
+lid_closed() { ioreg -r -k AppleClamshellState -d 4 | grep -q '"AppleClamshellState" = Yes'; }
 
 # The status bar reads a tmux option rather than shelling out every refresh.
 sync_state() {
@@ -58,10 +64,27 @@ case "${1:-sync}" in
     check "bare ESC aborts" "$?" "1"
     printf '\033[Ax\n' | read_password >/dev/null 2>&1
     check "arrow key does not abort" "$?" "0"
+    # lid_closed must give a definite answer, not fail open
+    lid_closed; lid=$?
+    check "lid state readable" "$([ $lid -le 1 ] && echo yes)" "yes"
     exit "$fail"
     ;;
   sync)
     sync_state
+    ;;
+  watch)
+    # A lid close with sleep disabled fires neither a sleep nor a display-sleep
+    # event, so macOS's "lock immediately" rule never runs. Lock it ourselves.
+    was_closed=false
+    while is_on; do
+      if lid_closed; then
+        $was_closed || open -a ScreenSaverEngine
+        was_closed=true
+      else
+        was_closed=false
+      fi
+      sleep 2
+    done
     ;;
   toggle)
     if is_on; then
@@ -72,14 +95,15 @@ case "${1:-sync}" in
     else
       set_disablesleep 1 || exit 1
       nohup caffeinate $FLAGS >/dev/null 2>&1 &
-      disown 2>/dev/null
-      msg='􀸙  caffeine on — awake with the lid closed'
+      pgrep -f "caffeine.sh watch" >/dev/null || nohup "$0" watch >/dev/null 2>&1 &
+      disown -a 2>/dev/null
+      msg='􀸙  caffeine on — awake with the lid closed, locks when you shut it'
     fi
     sync_state
     tmux display-message "$msg" 2>/dev/null
     ;;
   *)
-    echo "usage: ${0##*/} [toggle|sync]" >&2
+    echo "usage: ${0##*/} [toggle|sync|watch]" >&2
     exit 2
     ;;
 esac
