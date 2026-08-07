@@ -74,11 +74,13 @@ case "${1:-sync}" in
     ;;
   watch)
     # A lid close with sleep disabled fires neither a sleep nor a display-sleep
-    # event, so macOS's "lock immediately" rule never runs. Lock it ourselves.
+    # event, so macOS's "lock immediately" rule never runs. Firing the display-off
+    # event by hand puts us back on the normal path: real lock screen, session and
+    # every process left running (a logout would kill the work caffeine protects).
     was_closed=false
     while is_on; do
       if lid_closed; then
-        $was_closed || open -a ScreenSaverEngine
+        $was_closed || pmset displaysleepnow
         was_closed=true
       else
         was_closed=false
