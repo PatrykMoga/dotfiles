@@ -7,17 +7,13 @@
 #   ./statusline-preview.sh context    # only fixtures whose name matches "context"
 #   ./statusline-preview.sh --list     # list fixture names
 #
-# Fable note: the script reads its Fable quota from a cache file, not stdin, so
-# these fixtures point FABLE_CACHE at a temp file we control. That keeps the
-# preview hermetic — no keychain access, no network, no dependence on real usage.
+# Plan-usage (5h / 7d / per-model quota) lives in the tmux status bar now —
+# check it with `~/.scripts/claude-usage.sh --selftest`, not here.
 
 set -u
 
 STATUSLINE="${STATUSLINE:-$HOME/.claude/statusline-command.sh}"
 [ -x "$STATUSLINE" ] || { echo "not executable: $STATUSLINE" >&2; exit 1; }
-
-TMPDIR_RUN=$(mktemp -d) || exit 1
-trap 'rm -rf "$TMPDIR_RUN"' EXIT
 
 # ---------------------------------------------------------------------------
 # Payload builders
@@ -29,15 +25,11 @@ usage_json() {
   echo "{\"input_tokens\":$1,\"output_tokens\":0,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0}"
 }
 
-# payload <tokens|null> <rate_limits_json|""> [context_window_size]
+# payload <tokens|null> [context_window_size]
 payload() {
-  local usage rl size rl_field=""
+  local usage size
   usage=$(usage_json "$1")
-  rl="$2"
-  size="${3:-200000}"
-  # built outside the heredoc: quoting a key inside ${var:+...} breaks the expansion
-  [ -n "$rl" ] && rl_field=",
-  \"rate_limits\": $rl"
+  size="${2:-200000}"
   cat <<JSON
 {
   "cwd": "/Users/me/Developer/dotfiles",
@@ -63,67 +55,26 @@ payload() {
     "context_window_size": $size,
     "current_usage": $usage
   },
-  "exceeds_200k_tokens": false$rl_field
+  "exceeds_200k_tokens": false
 }
 JSON
-}
-
-# Windows expressed relative to now so countdowns stay realistic every run.
-now=$(date +%s)
-in_2h=$((now + 7200))
-in_4h=$((now + 14400))
-in_6d=$((now + 518400))
-past=$((now - 3600))
-
-# rl <5h_pct> <5h_reset> <7d_pct> <7d_reset> — "-" omits a window entirely
-rl() {
-  local parts=""
-  [ "$1" != "-" ] && parts="\"five_hour\":{\"used_percentage\":$1,\"resets_at\":$2}"
-  [ "$3" != "-" ] && parts="${parts:+$parts,}\"seven_day\":{\"used_percentage\":$3,\"resets_at\":$4}"
-  [ -z "$parts" ] && { echo ""; return; }
-  echo "{$parts}"
-}
-
-# fable_cache <percent|-> <resets_at_json>
-fable_cache() {
-  local f="$TMPDIR_RUN/fable.json"
-  if [ "$1" = "-" ]; then
-    echo '{"limits":[]}' > "$f"
-  else
-    cat > "$f" <<JSON
-{"limits":[{"kind":"weekly_scoped","group":"weekly","percent":$1,"resets_at":$2,
-  "scope":{"model":{"id":null,"display_name":"Fable"}},"is_active":false}]}
-JSON
-  fi
-  echo "$f"
 }
 
 # ---------------------------------------------------------------------------
-# Fixtures: name | tokens | rate_limits | fable_pct | fable_reset | size
+# Fixtures: name | tokens | size
 # ---------------------------------------------------------------------------
 
 FIXTURES=(
-  "fresh session (no rate_limits yet)|null||-|null|200000"
-  "typical early session|12000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
-  "mid session|90000|$(rl 45 $in_2h 38 $in_6d)|22|$in_6d|200000"
-  "context nearly full|190000|$(rl 60 $in_2h 44 $in_6d)|30|$in_6d|200000"
-  "5h window warning (80%)|50000|$(rl 80 $in_2h 40 $in_6d)|30|$in_6d|200000"
-  "5h window critical (95%)|50000|$(rl 95 $in_2h 55 $in_6d)|30|$in_6d|200000"
-  "all windows critical|170000|$(rl 97 $in_2h 93 $in_6d)|95|$in_6d|200000"
-  "5h window absent (not started)|12000|$(rl - - 10 $in_6d)|1|$in_6d|200000"
-  "7d window absent|12000|$(rl 4 $in_4h - -)|1|$in_6d|200000"
-  "no fable data|12000|$(rl 4 $in_4h 10 $in_6d)|-|null|200000"
-  "fable with no reset time|12000|$(rl 4 $in_4h 10 $in_6d)|0|null|200000"
-  "reset time in the past|12000|$(rl 88 $past 10 $in_6d)|1|$in_6d|200000"
-  "ISO 8601 resets_at (live API form)|12000|{\"five_hour\":{\"used_percentage\":4.2,\"resets_at\":\"$(date -u -r $in_4h '+%Y-%m-%dT%H:%M:%S.000000+00:00')\"},\"seven_day\":{\"used_percentage\":10.7,\"resets_at\":\"$(date -u -r $in_6d '+%Y-%m-%dT%H:%M:%SZ')\"}}|1|$in_6d|200000"
-  "1M context window|180000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|1000000"
-  "gauge 0% (empty track)|0|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
-  "gauge 6%|12000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
-  "gauge 25%|50000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
-  "gauge 50%|100000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
-  "gauge 75%|150000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
-  "gauge 100% (full)|200000|$(rl 4 $in_4h 10 $in_6d)|1|$in_6d|200000"
-  "everything empty|null||-|null|200000"
+  "fresh session|null|200000"
+  "typical early session|12000|200000"
+  "mid session|90000|200000"
+  "context nearly full|190000|200000"
+  "1M context window|180000|1000000"
+  "gauge 0% (empty track)|0|200000"
+  "gauge 25%|50000|200000"
+  "gauge 50%|100000|200000"
+  "gauge 75%|150000|200000"
+  "gauge 100% (full)|200000|200000"
 )
 
 # ---------------------------------------------------------------------------
@@ -140,15 +91,13 @@ printf '\n\033[1mstatusline preview\033[0m  \033[38;2;135;133;128m%s\033[0m\n\n'
 
 shown=0
 for fixture in "${FIXTURES[@]}"; do
-  IFS='|' read -r name tokens rate fpct freset size <<< "$fixture"
+  IFS='|' read -r name tokens size <<< "$fixture"
   [ -n "$filter" ] && [[ "$name" != *"$filter"* ]] && continue
   shown=$((shown + 1))
 
-  cache=$(fable_cache "$fpct" "$freset")
   printf '\033[38;2;135;133;128m%s\033[0m\n' "$name"
   printf '  '
-  payload "$tokens" "$rate" "$size" \
-    | FABLE_CACHE_OVERRIDE="$cache" ANTHROPIC_API_KEY="" bash "$STATUSLINE"
+  payload "$tokens" "$size" | bash "$STATUSLINE"
   printf '\n'
 done
 
