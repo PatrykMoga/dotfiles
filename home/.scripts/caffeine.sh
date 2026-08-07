@@ -25,11 +25,11 @@ case "${1:-status}" in
   toggle)
     if is_on; then
       # sudo first: a cancelled password leaves the machine exactly as it was
-      sudo pmset -a disablesleep 0 || exit 1
+      sudo /usr/bin/pmset -a disablesleep 0 || exit 1
       pkill -xf "caffeinate $FLAGS"
       msg='􀸙  caffeine off — sleep re-enabled'
     else
-      sudo pmset -a disablesleep 1 || exit 1
+      sudo /usr/bin/pmset -a disablesleep 1 || exit 1
       nohup caffeinate $FLAGS >/dev/null 2>&1 &
       disown 2>/dev/null
       msg='􀸙  caffeine on — awake with the lid closed'
