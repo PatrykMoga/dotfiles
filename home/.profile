@@ -34,12 +34,12 @@ ppl() {
   echo
   pgrep -fl 'pnpm (run |dev|build|install)|wrangler' | cut -c1-160
 }
-alias pdev='pnpm dev'
-# Workers: pu uploads a version without routing traffic to it, pvd promotes an
-# already-uploaded one (interactive: pick version + %), pd does both at once.
-alias pu='pnpm build && pnpm wrangler versions upload'
-alias pd='pnpm build && pnpm wrangler deploy'
-alias pvd='pnpm wrangler versions deploy'
+alias pd='pnpm dev'
+# w* = ship it. wu uploads a version without routing traffic to it, wv promotes
+# an already-uploaded one (interactive: pick version + %), wd does both at once.
+alias wu='pnpm build && pnpm wrangler versions upload'
+alias wd='pnpm build && pnpm wrangler deploy'
+alias wv='pnpm wrangler versions deploy'
 alias ai='~/.scripts/astro-init.sh'
 alias xi='~/.scripts/xcode-init.sh'
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
