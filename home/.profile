@@ -23,8 +23,23 @@ alias sr=''
 alias dev="cd ~/Developer/"
 alias dot="cd ~/Developer/dotfiles/"
 alias kc='~/.scripts/keyboard-clean'
-alias pk='pkill -f pnpm'
-alias pp='ps aux | grep pnpm'
+alias ppk='pkill -f pnpm'
+# ppl: dev servers as port -> project dir, then other pnpm tasks (install/build)
+ppl() {
+  printf '%-6s %-7s %s\n' PORT PID PROJECT
+  lsof -a -nP -iTCP -sTCP:LISTEN -c node 2>/dev/null | awk 'NR>1 {n=split($9,a,":"); print a[n], $2}' | sort -un |
+    while read -r port pid; do
+      printf '%-6s %-7s %s\n' "$port" "$pid" "$(lsof -a -p "$pid" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p' | sed "s|$HOME|~|")"
+    done
+  echo
+  pgrep -fl 'pnpm (run |dev|build|install)|wrangler' | cut -c1-160
+}
+alias pdev='pnpm dev'
+# Workers: pu uploads a version without routing traffic to it, pvd promotes an
+# already-uploaded one (interactive: pick version + %), pd does both at once.
+alias pu='pnpm build && pnpm wrangler versions upload'
+alias pd='pnpm build && pnpm wrangler deploy'
+alias pvd='pnpm wrangler versions deploy'
 alias ai='~/.scripts/astro-init.sh'
 alias xi='~/.scripts/xcode-init.sh'
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
