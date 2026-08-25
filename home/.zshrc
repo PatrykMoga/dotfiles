@@ -44,3 +44,6 @@ source <(fzf --zsh)
 if [ "$TERM_PROGRAM" = "ghostty" ] && command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
     tmux attach || tmux new-session
 fi
+
+# opencode
+export PATH=/Users/patrykmoga/.opencode/bin:$PATH

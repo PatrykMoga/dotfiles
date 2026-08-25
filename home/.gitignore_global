@@ -5,6 +5,7 @@ dist/
 .claude/settings.local.json
 .mcp.json
 .remember/
+graphify-out/
 
 # impeccable-ignore-start
 # Ephemeral output, runtime state, and per-dev overrides.
