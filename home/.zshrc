@@ -45,11 +45,5 @@ if [ "$TERM_PROGRAM" = "ghostty" ] && command -v tmux &> /dev/null && [ -z "$TMU
     tmux attach || tmux new-session
 fi
 
-# tmux sets TERM_PROGRAM=tmux; image TUIs need the real emulator to pick Kitty graphics
-if [ -n "$TMUX" ]; then
-    export TERM_PROGRAM="$(tmux show-environment -g TERM_PROGRAM 2>/dev/null | cut -d= -f2-)"
-    export TERM_PROGRAM_VERSION="$(tmux show-environment -g TERM_PROGRAM_VERSION 2>/dev/null | cut -d= -f2-)"
-fi
-
 # opencode
 export PATH=/Users/patrykmoga/.opencode/bin:$PATH
