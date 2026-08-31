@@ -122,7 +122,7 @@ Two-branch model: `main` (default, feature accumulation) and `production` (prod 
 
 ## Working with This Repo
 
-- This repo is public. Superpowers specs/plans and other Claude-config docs go to `home/.claude/docs/superpowers/` (private submodule), never to a top-level `docs/`
+- Superpowers specs/plans and other Claude-config docs go to `home/.claude/docs/superpowers/` (private submodule), never to a top-level `docs/`
 - After adding/moving files in `home/`, re-stow to update symlinks
 - Test config changes by sourcing files directly (e.g., `source ~/.zshrc`)
 - Tmux plugins: `prefix + I` to install, `prefix + U` to update
