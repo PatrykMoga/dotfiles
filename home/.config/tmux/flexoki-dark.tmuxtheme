@@ -2,7 +2,7 @@
 # Based on https://stephango.com/flexoki
 
 # Flexoki color palette
-%hidden FLEXOKI_BG="#1c1c1c"  # 234 in xterm-256; Claude Code quantizes, #1c1b1a is unreachable
+%hidden FLEXOKI_BG="#1c1b1a"
 %hidden FLEXOKI_BG_2="#282726"
 %hidden FLEXOKI_UI="#343331"
 %hidden FLEXOKI_UI_2="#403e3c"
