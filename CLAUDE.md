@@ -28,21 +28,13 @@ stow -R -d . -t ~ home
 
 Flexoki Dark is used consistently across tmux, neovim, ghostty, yazi, and terminal emulators.
 
-**Flexoki Reference**: https://stephango.com/flexoki
+**Flexoki Reference**: <https://stephango.com/flexoki>
 
 ### Claude Integration
 
 `.claude/` is a git submodule containing Claude Code settings, skills, and agents.
 
 Shell aliases live in `.profile`. Releases are the exception — run `/release` from an interactive claude session (no alias; print mode can't service it).
-
-### Git Workflow
-
-Two-branch model: `main` (default, feature accumulation) and `production` (prod deploys).
-
-- **Features**: `feat/*` → PR to `main` → accumulate → `/release` merges to `production`
-- **Hotfixes**: `fix/*` from `production` → PR with `--base production` → merge back to `main`
-- **Releases**: `/release` from main calculates semver bump, merges to production, tags, pushes
 
 ## Working with This Repo
 
