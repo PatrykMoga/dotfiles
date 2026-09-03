@@ -6,7 +6,10 @@ alias vim='nvim'
 alias v='nvim'
 alias lg='lazygit --use-config-file="$HOME/.config/lazygit/config.yml"'
 alias tc='tuicr'
-alias c='FORCE_COLOR=3 claude --advisor fable'
+# Claude Code renders 256-color when TMUX is set; this restores truecolor.
+export CLAUDE_CODE_TMUX_TRUECOLOR=1
+
+alias c='claude --advisor fable'
 alias cc='claude --continue'
 alias cr='claude --resume'
 alias cf='claude --model fable'
